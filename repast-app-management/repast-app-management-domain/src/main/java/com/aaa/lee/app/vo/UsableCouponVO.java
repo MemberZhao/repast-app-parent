@@ -3,10 +3,11 @@ package com.aaa.lee.app.vo;
 import lombok.Data;
 
 import javax.persistence.Column;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class UsableCouponVO {
+public class UsableCouponVO implements Serializable {
 
     private Long id;
 

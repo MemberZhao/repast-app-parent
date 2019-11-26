@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * 优惠券和产品关系表实体类
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "sms_coupon_product_relation")
 @Data
 @Accessors(chain = true)
-public class CouponProductRelation {
+public class CouponProductRelation implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

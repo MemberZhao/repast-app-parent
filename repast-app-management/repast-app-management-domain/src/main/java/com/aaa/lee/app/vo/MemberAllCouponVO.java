@@ -3,6 +3,7 @@ package com.aaa.lee.app.vo;
 import lombok.Data;
 
 import javax.persistence.Column;
+import java.io.Serializable;
 
 @Data
 public class MemberAllCouponVO extends UsableCouponVO {

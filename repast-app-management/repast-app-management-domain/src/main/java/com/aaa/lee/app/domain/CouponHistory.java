@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 /**
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Table(name = "sms_coupon_history")
 @Data
 @Accessors(chain = true)
-public class CouponHistory {
+public class CouponHistory implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
