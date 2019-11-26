@@ -29,7 +29,6 @@ public class CouponService {
      * @return
      **/
     public List<UsableCouponVO> getAllUsableCoupons(Long memberLevel){
-        System.out.println(couponMapper.getAllUsableCoupons(memberLevel));
         return couponMapper.getAllUsableCoupons(memberLevel);
     }
 

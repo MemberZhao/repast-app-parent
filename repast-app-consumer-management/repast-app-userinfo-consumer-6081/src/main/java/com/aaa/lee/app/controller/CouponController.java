@@ -76,7 +76,6 @@ public class CouponController extends BaseController {
     @GetMapping("/useCouponAffair")
     @ApiOperation(value = "使用优惠券", notes = "使用当前用户可用优惠券")
     public ResultData useCouponAffair(Long couponHistoryId, String openId, String amount){
-        System.out.println(couponHistoryId+"--"+openId+"--"+amount);
         return repastService.useCouponAffair(couponHistoryId, openId, amount);
     }
 

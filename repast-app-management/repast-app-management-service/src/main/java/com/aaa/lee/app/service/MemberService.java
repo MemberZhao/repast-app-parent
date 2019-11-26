@@ -81,7 +81,6 @@ public class MemberService extends BaseService<Member> {
      * @param
      * @return
      **/
-
     public Member isLogin(RedisService redisService, String openId){
         String mbrString = redisService.get(openId);
         Member member = JSONUtil.toObject(mbrString, Member.class);

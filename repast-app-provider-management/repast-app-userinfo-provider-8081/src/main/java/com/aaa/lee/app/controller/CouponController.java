@@ -132,7 +132,6 @@ public class CouponController extends BaseController {
      **/
     @GetMapping("/useCouponAffair")
     public ResultData useCouponAffair(@RequestParam("couponHistoryId") Long couponHistoryId, @RequestParam("openId") String openId, @RequestParam("amount") String amount){
-        System.out.println(couponHistoryId+"--"+openId+"--"+amount);
         Member m = memberService.isLogin(redisService, openId);
         if (null != m){
             int i = couponService.checkCouponStatusFromMemberListByCouponHistoryId(couponHistoryId, amount);
