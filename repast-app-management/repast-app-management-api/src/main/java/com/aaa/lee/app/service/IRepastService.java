@@ -7,6 +7,7 @@ import com.aaa.lee.app.domain.Product;
 import com.aaa.lee.app.domain.ProductCat;
 import com.aaa.lee.app.fallback.RepastFallBackFactory;
 import com.aaa.lee.app.vo.ShopInfoVo;
+import com.aaa.lee.app.vo.UsableCouponVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -89,5 +90,66 @@ public interface IRepastService {
     @GetMapping("/getProductByShopId")
     List<Product> getProductByShopId(Long shopId);
 
+    /**
+     * @author Memer Zhao
+     * @date 2019/11/22 9:15
+     * @description
+     *      获取会员余额
+     * @param
+     * @return
+     **/
+    @GetMapping("/getMemberBalance")
+    List<Member> getMemberBalance();
+    /**
+     * @author Memer Zhao
+     * @date 2019/11/23 14:34
+     * @description
+     * @param
+     * @return
+     **/
+    @PostMapping
+    Boolean payForMemeberBalance(@RequestParam int money);
+
+    /**
+     * 获取用户所有的可见优惠券信息
+     * @return
+     **/
+    @PostMapping("/getUsableCoupons")
+    ResultData<List<UsableCouponVO>> getAllUsableCoupons(@RequestParam("openId") String openId);
+
+    /**
+     * 获取用户所有优惠券
+     * @return
+     **/
+    @PostMapping("/getAllCouponsByMemberId")
+    ResultData<List> getAllCouponsByMemberId(@RequestParam("openId") String openId);
+
+    /**
+     * 获取用户所有可用优惠券
+     * @return
+     **/
+    @PostMapping("/getUsableCouponsByMemberId")
+    ResultData<List> getUsableCouponsByMemberId(@RequestParam("openId") String openId);
+
+    /**
+     * 获取用户当前店铺所有可用优惠券
+     * @return
+     **/
+    @PostMapping("/getUsableCouponsByMemberIdAndShopId")
+    ResultData<List> getUsableCouponsByMemberIdAndShopId(@RequestParam("shopId") Long shopId, @RequestParam("openId") String openId);
+
+    /**
+     * 领取优惠券
+     * @return
+     **/
+    @PostMapping("/receiveCouponAffair")
+    ResultData receiveCouponAffair(@RequestParam("couponId") Long couponId, @RequestParam("openId") String openId);
+
+    /**
+     * 使用优惠券
+     * @return
+     **/
+    @PostMapping("/useCouponAffair")
+    ResultData useCouponAffair(@RequestParam("couponHistoryId") Long couponHistoryId, @RequestParam("openId") String openId, @RequestParam("amount") String amount);
 
 }

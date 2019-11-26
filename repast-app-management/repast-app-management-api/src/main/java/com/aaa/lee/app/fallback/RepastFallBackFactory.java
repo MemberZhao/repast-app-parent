@@ -1,11 +1,13 @@
 package com.aaa.lee.app.fallback;
 
+import com.aaa.lee.app.base.ResultData;
 import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.domain.MemberReceiveAddress;
 import com.aaa.lee.app.domain.Product;
 import com.aaa.lee.app.domain.ProductCat;
 import com.aaa.lee.app.service.IRepastService;
 import com.aaa.lee.app.vo.ShopInfoVo;
+import com.aaa.lee.app.vo.UsableCouponVO;
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
 
@@ -52,6 +54,47 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
                 return null;
             }
 
+            @Override
+            public List<Member> getMemberBalance() {
+                System.out.println("测试会员余额熔断数据");
+                return null;
+            }
+
+            @Override
+            public Boolean payForMemeberBalance(int money) {
+                System.out.println("测试会员余额充值熔断数据");
+                return null;
+            }
+
+            @Override
+            public ResultData<List<UsableCouponVO>> getAllUsableCoupons(String openId) {
+                return null;
+            }
+
+            @Override
+            public ResultData<List> getAllCouponsByMemberId(String openId) {
+                return null;
+            }
+
+            @Override
+            public ResultData<List> getUsableCouponsByMemberId(String openId) {
+                return null;
+            }
+
+            @Override
+            public ResultData<List> getUsableCouponsByMemberIdAndShopId(Long shopId, String openId) {
+                return null;
+            }
+
+            @Override
+            public ResultData receiveCouponAffair(Long couponId, String openId) {
+                return null;
+            }
+
+            @Override
+            public ResultData useCouponAffair(Long couponHistoryId, String openId, String amount) {
+                return null;
+            }
         };
         return repastService;
     }
