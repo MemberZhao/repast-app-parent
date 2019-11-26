@@ -1,0 +1,27 @@
+{
+  "groups": [
+    {
+      "name": "spring.redis",
+      "type": "com.aaa.lee.app.properties.RedisProperties",
+      "sourceType": "com.aaa.lee.app.properties.RedisProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "spring.redis.command-timeout",
+      "type": "java.lang.String",
+      "sourceType": "com.aaa.lee.app.properties.RedisProperties"
+    },
+    {
+      "name": "spring.redis.max-attempts",
+      "type": "java.lang.String",
+      "sourceType": "com.aaa.lee.app.properties.RedisProperties"
+    },
+    {
+      "name": "spring.redis.nodes",
+      "type": "java.lang.String",
+      "sourceType": "com.aaa.lee.app.properties.RedisProperties"
+    }
+  ],
+  "hints": []
+}

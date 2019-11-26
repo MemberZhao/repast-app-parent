@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaa.lee.app.mapper.CollectMapper" >
+  <resultMap id="BaseResultMap" type="com.aaa.lee.app.domain.Collect" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="shop_id" property="memberId" jdbcType="BIGINT" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+
+  </resultMap>
+	<insert id="insertCollectOrderByMemberId">
+		insert into ums_collect(member_id,order_id) VALUES(memberId,orderId)
+	</insert>
+	<!--	<update id="updateCollectProductByMemberId">-->
+<!--		UPDATE ums_collect-->
+<!--			SET product_id = NULL-->
+<!--		WHERE-->
+<!--			member_id = #{memberId}-->
+<!--		AND-->
+<!--			product_id=#{productId}-->
+<!--	</update>-->
+<!--	<update id="updateCollectOrderByMemberId">-->
+<!--		UPDATE ums_collect-->
+<!--			SET order_id = NULL-->
+<!--		WHERE-->
+<!--			member_id = #{memberId}-->
+<!--		AND-->
+
+<!--			order_id=#{orderId}-->
+<!--	</update>-->
+	<delete id="deleteCollectProductByMemberId">
+		DELETE
+FROM
+	ums_collect
+WHERE
+	member_id = #{memberId}
+AND product_id = #{productId}
+	</delete>
+	<delete id="deleteCollectOrderByMemberId">
+		DELETE
+FROM
+	ums_collect
+WHERE
+	member_id = #{memberId}
+AND order_id = #{orderId}
+	</delete>
+
+
+	<select id="selectAllCollectProductByMemberId" resultType="com.aaa.lee.app.domain.PmsProduct">
+     SELECT
+	*
+FROM
+	pms_product pro
+LEFT JOIN (
+	SELECT
+		c.member_id memberId,
+		c.product_id productId
+	FROM
+		ums_collect c
+	WHERE
+		member_id = #{memberId}
+	AND product_id IS NOT NULL
+) co ON pro.id = co.productId
+  </select>
+  <select id="selectAllCollectOrderByMemberId" resultType="com.aaa.lee.app.domain.OmsOrder">
+
+    SELECT
+	*
+FROM
+	oms_order om
+LEFT JOIN (
+	SELECT
+    	c.member_id memberId,
+		c.order_id orderId
+	FROM
+		ums_collect c
+	WHERE
+		member_id = #{memberId}
+	AND order_id IS NOT NULL
+) co ON om.id = co.orderId
+  </select>
+	<select id="selectAllCollectCountByMember" resultType="java.util.Map">
+		SELECT(SELECT
+	count(1)
+FROM
+	(
+		SELECT
+			product_id
+		FROM
+			ums_collect
+		WHERE
+			member_id = #{memberId}
+		AND product_id IS NOT NULL
+	)co)+
+(SELECT
+	count(1)
+FROM
+	(
+		SELECT
+			order_id
+		FROM
+			ums_collect
+		WHERE
+			member_id = #{memberId}
+		AND order_id IS NOT NULL
+
+	)coo)as collectCount
+
+	</select>
+	<select id="selectIfCollectProduct" resultType="com.aaa.lee.app.domain.Collect">
+			SELECT
+			member_id memberId,
+			product_id productId
+		FROM
+			ums_collect
+		WHERE
+			member_id = #{memberId}
+		AND product_id = #{productId}
+	</select>
+    <select id="selectIfCollectOrder" resultType="com.aaa.lee.app.domain.Collect">
+		SELECT
+			member_id memberId,
+			order_id orderId
+		FROM
+			ums_collect
+		WHERE
+			member_id = #{memberId}
+		AND order_id = #{orderId}
+	</select>
+
+
+    <!--  <insert id="addCollectByMemberIdAndProductId" parameterType="map">-->
+<!--    insert into ums_collect(member_id,product_id) values (#{memberId},#{productID})-->
+<!--  </insert>-->
+<!--  <select id="selectCollectByMemberId" parameterType="map" resultType="com.aaa.lee.app.domain.Collect" >-->
+<!--    select * from ums_collect where member_id=#{memberId} and product_id=#{productID}-->
+<!--  </select>-->
+
+
+</mapper>
+
