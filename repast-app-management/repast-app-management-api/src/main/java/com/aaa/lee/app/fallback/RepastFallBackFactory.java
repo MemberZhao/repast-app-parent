@@ -89,6 +89,31 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
             public ResultData useCouponAffair(Long couponHistoryId, String openId, String amount) {
                 return null;
             }
+
+            @Override
+            public ResultData toCollect(Long productId, String openId) {
+                return null;
+            }
+
+            @Override
+            public ResultData toCollectOrder(Long orderId, String openId) {
+                return null;
+            }
+
+            @Override
+            public ResultData selectAllCollectProduct(String openId) {
+                return null;
+            }
+
+            @Override
+            public ResultData selectAllCollectOrder(String openId) {
+                return null;
+            }
+
+            @Override
+            public ResultData selectAllCollect(String openId) {
+                return null;
+            }
         };
         return repastService;
     }

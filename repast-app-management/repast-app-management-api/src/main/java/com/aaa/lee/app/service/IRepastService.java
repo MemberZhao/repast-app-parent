@@ -143,4 +143,41 @@ public interface IRepastService {
     @GetMapping("/useCouponAffair")
     ResultData useCouponAffair(@RequestParam("couponHistoryId") Long couponHistoryId, @RequestParam("openId") String openId, @RequestParam("amount") String amount);
 
+    /**
+     * 单品收藏
+     * @param collect
+     * @return
+     */
+    @PostMapping("/toCollect")
+    ResultData toCollect(@RequestParam("productId") Long productId, @RequestParam("openId") String openId);
+
+    /**
+     * 订单收藏
+     * @param collect
+     * @return
+     */
+    @PostMapping("/toCollectOrder")
+    ResultData toCollectOrder(@RequestParam("orderId") Long orderId, @RequestParam("openId") String openId);
+
+    /**
+     * 查询当前用户的所有单品收藏
+     * @return
+     */
+    @GetMapping("/selectAllCollectProduct")
+    ResultData selectAllCollectProduct(@RequestParam("openId") String openId);
+
+    /**
+     * 查询当前用户的所有的订单收藏
+     * @param openId
+     * @return
+     */
+    @GetMapping("/selectAllCollectOrder")
+    ResultData selectAllCollectOrder(@RequestParam("openId")String openId);
+    /**
+     * 查询该用户的所有收藏总数
+     * @param openId
+     * @return
+     */
+    @GetMapping("/selectAllCollect")
+    ResultData selectAllCollect(@RequestParam("openId") String openId);
 }

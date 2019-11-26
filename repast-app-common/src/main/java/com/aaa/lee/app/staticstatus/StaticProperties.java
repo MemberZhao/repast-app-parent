@@ -22,5 +22,9 @@ public class StaticProperties {
     public static final String COUPONID = "couponId";
     public static final String MEMBERID = "memberId";
     public static final String AMOUNT = "amount";
+    public static final String CANCEL = "200";
+    public static final String  SUCCESS= "201";
+    public static final String  NOTLOGIN= "301";
+    public static final String  WIN= "401";
 
 }

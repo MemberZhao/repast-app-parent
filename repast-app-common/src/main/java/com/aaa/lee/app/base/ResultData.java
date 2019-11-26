@@ -1,6 +1,7 @@
 package com.aaa.lee.app.base;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
@@ -17,6 +18,7 @@ import java.io.Serializable;
  *      data:所要返回的数据
  **/
 @Data
+@Component
 public class ResultData<T> implements Serializable {
 
     private String code;
