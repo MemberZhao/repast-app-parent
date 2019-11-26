@@ -100,56 +100,47 @@ public interface IRepastService {
      **/
     @GetMapping("/getMemberBalance")
     List<Member> getMemberBalance();
-    /**
-     * @author Memer Zhao
-     * @date 2019/11/23 14:34
-     * @description
-     * @param
-     * @return
-     **/
-    @PostMapping
-    Boolean payForMemeberBalance(@RequestParam int money);
 
     /**
      * 获取用户所有的可见优惠券信息
      * @return
      **/
-    @PostMapping("/getUsableCoupons")
+    @GetMapping("/getUsableCoupons")
     ResultData<List<UsableCouponVO>> getAllUsableCoupons(@RequestParam("openId") String openId);
 
     /**
      * 获取用户所有优惠券
      * @return
      **/
-    @PostMapping("/getAllCouponsByMemberId")
+    @GetMapping("/getAllCouponsByMemberId")
     ResultData<List> getAllCouponsByMemberId(@RequestParam("openId") String openId);
 
     /**
      * 获取用户所有可用优惠券
      * @return
      **/
-    @PostMapping("/getUsableCouponsByMemberId")
+    @GetMapping("/getUsableCouponsByMemberId")
     ResultData<List> getUsableCouponsByMemberId(@RequestParam("openId") String openId);
 
     /**
      * 获取用户当前店铺所有可用优惠券
      * @return
      **/
-    @PostMapping("/getUsableCouponsByMemberIdAndShopId")
+    @GetMapping("/getUsableCouponsByMemberIdAndShopId")
     ResultData<List> getUsableCouponsByMemberIdAndShopId(@RequestParam("shopId") Long shopId, @RequestParam("openId") String openId);
 
     /**
      * 领取优惠券
      * @return
      **/
-    @PostMapping("/receiveCouponAffair")
+    @GetMapping("/receiveCouponAffair")
     ResultData receiveCouponAffair(@RequestParam("couponId") Long couponId, @RequestParam("openId") String openId);
 
     /**
      * 使用优惠券
      * @return
      **/
-    @PostMapping("/useCouponAffair")
+    @GetMapping("/useCouponAffair")
     ResultData useCouponAffair(@RequestParam("couponHistoryId") Long couponHistoryId, @RequestParam("openId") String openId, @RequestParam("amount") String amount);
 
 }

@@ -72,4 +72,22 @@ public class MemberService extends BaseService<Member> {
         }
         return false;
     }
+
+    /**
+     * @author shenzhendong
+     * @date 2019/11/22 9:48
+     *      验证登录
+     * @description
+     * @param
+     * @return
+     **/
+
+    public Member isLogin(RedisService redisService, String openId){
+        String mbrString = redisService.get(openId);
+        Member member = JSONUtil.toObject(mbrString, Member.class);
+        if (null != member){
+            return member;
+        }
+        return null;
+    }
 }

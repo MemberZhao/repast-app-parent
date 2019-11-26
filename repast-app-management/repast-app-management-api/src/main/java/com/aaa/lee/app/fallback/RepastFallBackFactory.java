@@ -61,12 +61,6 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
             }
 
             @Override
-            public Boolean payForMemeberBalance(int money) {
-                System.out.println("测试会员余额充值熔断数据");
-                return null;
-            }
-
-            @Override
             public ResultData<List<UsableCouponVO>> getAllUsableCoupons(String openId) {
                 return null;
             }
