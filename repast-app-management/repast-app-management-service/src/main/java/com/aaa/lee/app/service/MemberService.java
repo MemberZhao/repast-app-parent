@@ -72,34 +72,4 @@ public class MemberService extends BaseService<Member> {
         }
         return false;
     }
-    /**
-     * @author Member Zhao
-     * @date 2019/11/22 9:10
-     * @description
-     * @param
-     * @return
-     **/
-    public List<Member> getMemberBalance(RedisService redisService){
-        String mrbString = redisService.get(REDIS_KEY);
-        if(!NULL.equals(mrbString)){
-            Member member = JSONUtil.toObject(mrbString, Member.class);
-            return  memberMapper.selectMemberBalance(member.getId());
-        }
-       return null;
-    }
-    /**
-     * @author Memer Zhao
-     * @date 2019/11/22 9:48
-     * @description
-     * @param
-     * @return
-     **/
-    public Boolean updateMemberBalance(int money,RedisService redisService){
-        String mrbString = redisService.get(REDIS_KEY);
-        if(!NULL.equals(mrbString)){
-            Member member = JSONUtil.toObject(mrbString, Member.class);
-            return memberMapper.updateMemberBalance(money,member.getId());
-        }
-        return null;
-    }
 }

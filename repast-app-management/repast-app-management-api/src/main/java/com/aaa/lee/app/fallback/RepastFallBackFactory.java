@@ -52,17 +52,6 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
                 return null;
             }
 
-            @Override
-            public List<Member> getMemberBalance() {
-                System.out.println("测试会员余额熔断数据");
-                return null;
-            }
-
-            @Override
-            public Boolean payForMemeberBalance(int money) {
-                System.out.println("测试会员余额充值熔断数据");
-                return null;
-            }
         };
         return repastService;
     }

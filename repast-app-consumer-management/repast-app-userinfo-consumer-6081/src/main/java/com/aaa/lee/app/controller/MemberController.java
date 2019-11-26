@@ -69,34 +69,4 @@ public class MemberController extends BaseController {
             return failed();
         }
     }
-    /**
-     * @author Memer Zhao
-     * @date 2019/11/22 9:14
-     * @description
-     *         获取会员余额
-     * @param
-     * @return
-     **/
-    @GetMapping("/getMemberBalance")
-    @ApiOperation(value = "会员余额",notes = "获取会员余额")
-    public ResultData getMemberBalance(){
-        List<Member> memberList = repastService.getMemberBalance();
-        return success(memberList);
-    }
-    /**
-     * @author Memer Zhao
-     * @date 2019/11/22 9:27
-     * @description
-     * @param
-     * @return
-     **/
-    @GetMapping("/updateMemberBalance")
-    @ApiOperation(value = "会员余额",notes = "充值会员余额")
-    public ResultData payForMemeberBalance(int money){
-        Boolean b = repastService.payForMemeberBalance(money);
-        if (b){
-            return success();
-        }
-        return failed();
-    }
 }

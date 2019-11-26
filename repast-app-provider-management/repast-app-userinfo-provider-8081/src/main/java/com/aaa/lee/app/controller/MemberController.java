@@ -36,27 +36,5 @@ public class MemberController {
     public Boolean doLogin(@RequestBody Member member) {
         return memberService.doLogin(member, redisService);
     }
-    /**
-     * @author Memer Zhao
-     * @date 2019/11/22 9:16 
-     * @description 
-     * @param 
-     * @return 
-     **/
-    @GetMapping("/getMemberBalance")
-    public List<Member> getMemberBalance(){
-        return memberService.getMemberBalance(redisService);
-    }
-    /**
-     * @author Memer Zhao
-     * @date 2019/11/22 9:28
-     * @description
-     * @param
-     * @return
-     **/
-    @GetMapping("/updateMemberBalance")
-    public Boolean payForMemberBalance(int money){
 
-        return  memberService.updateMemberBalance(money,redisService);
-    }
 }

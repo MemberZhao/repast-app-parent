@@ -89,23 +89,5 @@ public interface IRepastService {
     @GetMapping("/getProductByShopId")
     List<Product> getProductByShopId(Long shopId);
 
-    /**
-     * @author Memer Zhao
-     * @date 2019/11/22 9:15
-     * @description
-     *      获取会员余额
-     * @param
-     * @return
-     **/
-    @GetMapping("/getMemberBalance")
-    List<Member> getMemberBalance();
-    /**
-     * @author Memer Zhao
-     * @date 2019/11/23 14:34
-     * @description
-     * @param
-     * @return
-     **/
-    @PostMapping
-    Boolean payForMemeberBalance(@RequestParam int money);
+
 }
