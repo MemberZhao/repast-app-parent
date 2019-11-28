@@ -10,10 +10,13 @@
     <result column="order_id" property="orderId" jdbcType="BIGINT" />
 
   </resultMap>
-	<insert id="insertCollectOrderByMemberId">
-		insert into ums_collect(member_id,order_id) VALUES(memberId,orderId)
+	<insert id="insertCollectOrderByMemberId"  parameterType="com.aaa.lee.app.domain.Collect">
+		insert into ums_collect(member_id,order_id) VALUES(#{memberId},#{orderId})
 	</insert>
-	<!--	<update id="updateCollectProductByMemberId">-->
+    <insert id="insertCollectProductByMemberId" parameterType="com.aaa.lee.app.domain.Collect">
+		insert into ums_collect(member_id,product_id) VALUES(#{memberId},#{productId})
+	</insert>
+    <!--	<update id="updateCollectProductByMemberId">-->
 <!--		UPDATE ums_collect-->
 <!--			SET product_id = NULL-->
 <!--		WHERE-->
@@ -30,7 +33,7 @@
 
 <!--			order_id=#{orderId}-->
 <!--	</update>-->
-	<delete id="deleteCollectProductByMemberId">
+	<delete id="deleteCollectProductByMemberId"  parameterType="com.aaa.lee.app.domain.Collect">
 		DELETE
 FROM
 	ums_collect
@@ -38,7 +41,7 @@ WHERE
 	member_id = #{memberId}
 AND product_id = #{productId}
 	</delete>
-	<delete id="deleteCollectOrderByMemberId">
+	<delete id="deleteCollectOrderByMemberId"  parameterType="com.aaa.lee.app.domain.Collect">
 		DELETE
 FROM
 	ums_collect
@@ -48,7 +51,7 @@ AND order_id = #{orderId}
 	</delete>
 
 
-	<select id="selectAllCollectProductByMemberId" resultType="com.aaa.lee.app.domain.PmsProduct">
+	<select id="selectAllCollectProductByMemberId" resultType="com.aaa.lee.app.domain.PmsProduct" parameterType="Long">
      SELECT
 	*
 FROM
@@ -64,7 +67,7 @@ LEFT JOIN (
 	AND product_id IS NOT NULL
 ) co ON pro.id = co.productId
   </select>
-  <select id="selectAllCollectOrderByMemberId" resultType="com.aaa.lee.app.domain.OmsOrder">
+  <select id="selectAllCollectOrderByMemberId" resultType="com.aaa.lee.app.domain.OmsOrder" parameterType="Long">
 
     SELECT
 	*
@@ -109,7 +112,7 @@ FROM
 	)coo)as collectCount
 
 	</select>
-	<select id="selectIfCollectProduct" resultType="com.aaa.lee.app.domain.Collect">
+	<select id="selectIfCollectProduct" resultType="com.aaa.lee.app.domain.Collect"  parameterType="com.aaa.lee.app.domain.Collect">
 			SELECT
 			member_id memberId,
 			product_id productId
@@ -119,7 +122,7 @@ FROM
 			member_id = #{memberId}
 		AND product_id = #{productId}
 	</select>
-    <select id="selectIfCollectOrder" resultType="com.aaa.lee.app.domain.Collect">
+    <select id="selectIfCollectOrder" resultType="com.aaa.lee.app.domain.Collect"  parameterType="com.aaa.lee.app.domain.Collect">
 		SELECT
 			member_id memberId,
 			order_id orderId

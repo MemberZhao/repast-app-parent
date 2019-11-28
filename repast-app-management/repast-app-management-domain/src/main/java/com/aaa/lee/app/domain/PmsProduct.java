@@ -1,10 +1,19 @@
 package com.aaa.lee.app.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Table(name = "pms_product")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Accessors(chain = true)
 public class PmsProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

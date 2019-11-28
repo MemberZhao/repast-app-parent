@@ -19,7 +19,8 @@ import static com.aaa.lee.app.staticstatus.StaticProperties.*;
 
 
 @Service
-public class CollectService extends BaseService<Collect> {
+public class
+CollectService extends BaseService<Collect> {
 
     @Autowired
     private CollectMapper collectMapper;
@@ -53,7 +54,8 @@ public class CollectService extends BaseService<Collect> {
                 resultData.setMsg("取消收藏");
                 return resultData;
             }else {
-                Integer integer = collectMapper.insert(this.collect);
+                    int aaa = collectMapper.insertCollectProductByMemberId(this.collect);
+                    System.out.println(aaa);
                     resultData.setCode(SUCCESS);
                     resultData.setMsg("商品添加收藏成功");
                 return resultData;

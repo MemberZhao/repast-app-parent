@@ -23,6 +23,7 @@ public interface CollectMapper<Internal> extends Mapper<Collect> {
      * @return
      */
     int insertCollectOrderByMemberId(Collect collect);
+    int insertCollectProductByMemberId(Collect collect);
     /**
      * 根据memberId查询该用户的所有收藏订单
      * @param memberId
