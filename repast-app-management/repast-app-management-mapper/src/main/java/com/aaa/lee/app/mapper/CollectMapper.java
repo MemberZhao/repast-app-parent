@@ -11,6 +11,11 @@ import java.util.Map;
 
 public interface CollectMapper<Internal> extends Mapper<Collect> {
     /**
+     * 判断商品的当前状态
+     */
+    int selectProductStatusById(Long productId);
+
+    /**
      * 根据memberId查询该用户的所有收藏单品
      * @param memberId
      * @return

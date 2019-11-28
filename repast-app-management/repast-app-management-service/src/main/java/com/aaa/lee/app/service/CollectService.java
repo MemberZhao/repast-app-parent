@@ -44,26 +44,36 @@ CollectService extends BaseService<Collect> {
         Member member = JSONUtil.toObject(memberString, Member.class);
         collect.setMemberId(member.getId());
         collect.setProductId(productId);
-        if (null!= member ){
-            Collect collect1 = collectMapper.selectIfCollectProduct(this.collect);
+        //判断商品当前状态  i=1 上架
+        int i = collectMapper.selectProductStatusById(productId);
+        if (i == 1){
+            if (null!= member ){
+                Collect collect1 = collectMapper.selectIfCollectProduct(this.collect);
                 if (null != collect1){
-                //查询数据库有数据  说明该用户已经收藏该商品，再次点击时，应该执行取消收藏操作
-                //取消收藏 --
-                Integer result = collectMapper.deleteCollectProductByMemberId(collect);
-                resultData.setCode(CANCEL);
-                resultData.setMsg("取消收藏");
-                return resultData;
-            }else {
+                    //查询数据库有数据  说明该用户已经收藏该商品，再次点击时，应该执行取消收藏操作
+                    //取消收藏 --
+                    Integer result = collectMapper.deleteCollectProductByMemberId(collect);
+                    resultData.setCode(CANCEL);
+                    resultData.setMsg("取消收藏");
+                    return resultData;
+                }else {
                     int aaa = collectMapper.insertCollectProductByMemberId(this.collect);
                     System.out.println(aaa);
                     resultData.setCode(SUCCESS);
                     resultData.setMsg("商品添加收藏成功");
-                return resultData;
+                    return resultData;
+                }
             }
-        }
-        resultData.setCode(NOTLOGIN);
-        resultData.setMsg("没有登录");
-        return resultData;
+            resultData.setCode(NOTLOGIN);
+            resultData.setMsg("没有登录");
+            return resultData;
+         }else {
+            resultData.setCode(SOLDOUT);
+            resultData.setMsg("商品已下架");
+            return resultData;
+         }
+
+
     }
 
     /**
@@ -148,6 +158,7 @@ CollectService extends BaseService<Collect> {
             Map<String, Object> collectCount = collectMapper.selectAllCollectCountByMember(member.getId());
             resultData.setCode(WIN);
             resultData.setData(collectCount);
+            resultData.setMsg(null);
             return resultData;
         }
         resultData.setCode(NOTLOGIN);

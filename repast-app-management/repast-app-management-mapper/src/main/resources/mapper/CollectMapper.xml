@@ -132,6 +132,9 @@ FROM
 			member_id = #{memberId}
 		AND order_id = #{orderId}
 	</select>
+    <select id="selectProductStatusById" resultType="java.lang.Integer" parameterType="Long">
+		select publish_status FROM pms_product where id=#{productId}
+	</select>
 
 
     <!--  <insert id="addCollectByMemberIdAndProductId" parameterType="map">-->

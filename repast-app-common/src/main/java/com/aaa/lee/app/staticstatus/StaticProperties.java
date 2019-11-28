@@ -26,5 +26,5 @@ public class StaticProperties {
     public static final String  SUCCESS= "201";
     public static final String  NOTLOGIN= "301";
     public static final String  WIN= "401";
-
+    public static final String  SOLDOUT= "402";
 }
