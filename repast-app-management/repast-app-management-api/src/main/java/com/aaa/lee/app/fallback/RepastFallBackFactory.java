@@ -81,12 +81,17 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
             }
 
             @Override
+            public ResultData<List> getDisableCouponsByMemberId(String openId) {
+                return null;
+            }
+
+            @Override
             public ResultData receiveCouponAffair(Long couponId, String openId) {
                 return null;
             }
 
             @Override
-            public ResultData useCouponAffair(Long couponHistoryId, String openId, String amount) {
+            public ResultData useCouponAffair(Long couponHistoryId, String openId, Double amount) {
                 return null;
             }
 

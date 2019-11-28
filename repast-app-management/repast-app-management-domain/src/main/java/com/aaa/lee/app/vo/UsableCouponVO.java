@@ -42,10 +42,20 @@ public class UsableCouponVO implements Serializable {
     private int useType;
 
     /**
+     * 产品分类id
+     */
+    private String productCategoryId;
+
+    /**
      * 产品分类名称
      */
     @Column(name = "product_category_name")
     private String productCategoryName;
+
+    /**
+     * 商品id
+     */
+    private String productId;
 
     /**
      * 商品名称

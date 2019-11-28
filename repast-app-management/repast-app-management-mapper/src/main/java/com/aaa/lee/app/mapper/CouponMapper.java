@@ -28,6 +28,8 @@ public interface CouponMapper extends Mapper<Coupon> {
 
     List<MemberAllCouponVO> getUsableCouponsByMemberId(Long id);
 
+    List<MemberAllCouponVO> getDisableCouponsByMemberId(Long id);
+
     List<MemberAllCouponVO> getUsableCouponsByMemberIdAndShopId(Member m);
 
     boolean setAutoInvalid(Map<String, String> m);

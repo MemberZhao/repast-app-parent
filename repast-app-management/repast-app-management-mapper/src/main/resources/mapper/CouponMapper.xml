@@ -32,7 +32,9 @@
             c.start_time startTime,
             c.end_time endTime,
             c.use_type,
+            cp.product_category_id productCategoryId,
             cp.product_category_name productCategoryName,
+            cr.product_id productId,
             cr.product_name productName,
             s.name shopName
         FROM
@@ -52,7 +54,9 @@
             c.start_time startTime,
             c.end_time endTime,
             c.use_type,
+            cp.product_category_id productCategoryId,
             cp.product_category_name productCategoryName,
+            cr.product_id productId,
             cr.product_name productName,
             ch.id couponHistoryId,
             ch.use_status useStatus,
@@ -77,7 +81,9 @@
             c.start_time startTime,
             c.end_time endTime,
             c.use_type,
+            cp.product_category_id productCategoryId,
             cp.product_category_name productCategoryName,
+            cr.product_id productId,
             cr.product_name productName,
             ch.id couponHistoryId,
             ch.use_status useStatus,
@@ -102,7 +108,9 @@
             c.start_time startTime,
             c.end_time endTime,
             c.use_type,
+           cp.product_category_id productCategoryId,
             cp.product_category_name productCategoryName,
+            cr.product_id productId,
             cr.product_name productName,
             ch.id couponHistoryId,
             ch.use_status useStatus,
@@ -137,14 +145,41 @@
     </select>
     <select id="checkCouponStatusFromMemberListByCouponHistoryId" parameterType="map" resultType="java.lang.Integer">
         SELECT
-        count( ch.id ),
-        c.min_point
+            count( ch.id ),
+            c.min_point
         FROM
-        sms_coupon_history ch
+            sms_coupon_history ch
         JOIN sms_coupon c ON c.id = ch.coupon_id
         WHERE
-        ch.id = #{id}
+            ch.id = #{id}
         AND ch.use_status = 0
         AND c.min_point <![CDATA[<=]]> ${amount}
+    </select>
+    <select id="getDisableCouponsByMemberId" resultType="com.aaa.lee.app.vo.MemberAllCouponVO">
+     SELECT
+            c.id,
+            c.NAME,
+            c.platform,
+            c.amount,
+            c.start_time startTime,
+            c.end_time endTime,
+            c.use_type,
+            cp.product_category_id productCategoryId,
+            cp.product_category_name productCategoryName,
+            cr.product_id productId,
+            cr.product_name productName,
+            ch.id couponHistoryId,
+            ch.use_status useStatus,
+            ch.order_id orderId,
+            ch.order_sn orderSn,
+            s.name shopName
+        FROM
+            sms_coupon_history ch
+            JOIN sms_coupon c ON ch.coupon_id = c.id
+            LEFT JOIN sms_coupon_product_category_relation cp ON c.id = cp.coupon_id
+            LEFT JOIN sms_coupon_product_relation cr ON cr.coupon_id = c.id
+            LEFT JOIN ums_shop_information s ON s.id = c.shop_id
+        WHERE
+            ch.member_id = #{id} and ch.use_status <![CDATA[<>]]> 0
     </select>
 </mapper>

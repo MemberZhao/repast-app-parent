@@ -81,6 +81,23 @@ public class CouponController extends BaseController {
     }
 
     /**
+     * 获取用户所有不可用优惠券
+     * @return
+     **/
+    @GetMapping("/getDisableCouponsByMemberId")
+    public ResultData<List> getDisableCouponsByMemberId(@RequestParam("openId") String openId){
+        Member m = memberService.isLogin(redisService, openId);
+        if (null != m){
+            List<MemberAllCouponVO> disableCouponsByMemberId = couponService.getDisableCouponsByMemberId(m.getId());
+            if (disableCouponsByMemberId.size()>0){
+                return super.success(disableCouponsByMemberId);
+            }
+            return super.success("用户暂无可用优惠券");
+        }
+        return super.failed();
+    }
+
+    /**
      * 获取用户在当前店铺所有可用优惠券
      * @return
      **/
@@ -131,7 +148,7 @@ public class CouponController extends BaseController {
      * @return
      **/
     @GetMapping("/useCouponAffair")
-    public ResultData useCouponAffair(@RequestParam("couponHistoryId") Long couponHistoryId, @RequestParam("openId") String openId, @RequestParam("amount") String amount){
+    public ResultData useCouponAffair(@RequestParam("couponHistoryId") Long couponHistoryId, @RequestParam("openId") String openId, @RequestParam("amount") Double amount){
         Member m = memberService.isLogin(redisService, openId);
         if (null != m){
             int i = couponService.checkCouponStatusFromMemberListByCouponHistoryId(couponHistoryId, amount);

@@ -130,6 +130,13 @@ public interface IRepastService {
     ResultData<List> getUsableCouponsByMemberIdAndShopId(@RequestParam("shopId") Long shopId, @RequestParam("openId") String openId);
 
     /**
+     * 获取用户所有不可用优惠券
+     * @return
+     **/
+    @GetMapping("/getDisableCouponsByMemberId")
+    ResultData<List> getDisableCouponsByMemberId(@RequestParam("openId") String openId);
+
+    /**
      * 领取优惠券
      * @return
      **/
@@ -141,7 +148,7 @@ public interface IRepastService {
      * @return
      **/
     @GetMapping("/useCouponAffair")
-    ResultData useCouponAffair(@RequestParam("couponHistoryId") Long couponHistoryId, @RequestParam("openId") String openId, @RequestParam("amount") String amount);
+    ResultData useCouponAffair(@RequestParam("couponHistoryId") Long couponHistoryId, @RequestParam("openId") String openId, @RequestParam("amount") Double amount);
 
     /**
      * 单品收藏

@@ -50,6 +50,16 @@ public class CouponController extends BaseController {
     }
 
     /**
+     * 获取用户所有不可用优惠券
+     * @return
+     **/
+    @GetMapping("/getDisableCouponsByMemberId")
+    @ApiOperation(value = "获取用户所有不可用优惠券", notes = "获取用户所有不可用优惠券")
+    public ResultData<List> getDisableCouponsByMemberId( String openId){
+        return repastService.getDisableCouponsByMemberId(openId);
+    }
+
+    /**
      * 获取用户当前店铺所有可用优惠券
      * @return
      **/
@@ -75,7 +85,7 @@ public class CouponController extends BaseController {
      **/
     @GetMapping("/useCouponAffair")
     @ApiOperation(value = "使用优惠券", notes = "使用当前用户可用优惠券")
-    public ResultData useCouponAffair(Long couponHistoryId, String openId, String amount){
+    public ResultData useCouponAffair(Long couponHistoryId, String openId, Double amount){
         return repastService.useCouponAffair(couponHistoryId, openId, amount);
     }
 

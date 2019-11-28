@@ -1,6 +1,7 @@
 package com.aaa.lee.app.service;
 
 
+import com.aaa.lee.app.base.ResultData;
 import com.aaa.lee.app.domain.CouponHistory;
 import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.mapper.CouponMapper;
@@ -47,6 +48,14 @@ public class CouponService {
      **/
     public List<MemberAllCouponVO> getUsableCouponsByMemberId(Long id){
         return couponMapper.getUsableCouponsByMemberId(id);
+    }
+
+    /**
+     * 获取用户所有不可用优惠券
+     * @return
+     **/
+    public List<MemberAllCouponVO> getDisableCouponsByMemberId(Long id){
+        return couponMapper.getDisableCouponsByMemberId(id);
     }
 
     /**
@@ -103,7 +112,7 @@ public class CouponService {
     /**
      * 检查优惠券状态是否可用
      **/
-    public int checkCouponStatusFromMemberListByCouponHistoryId(Long id, String amount){
+    public int checkCouponStatusFromMemberListByCouponHistoryId(Long id, Double amount){
         Map<String, Object> m = new HashMap<String, Object>(2);
         m.put(RECEIVEHISTORYID, id);
         m.put(AMOUNT, amount);
