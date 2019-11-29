@@ -152,8 +152,8 @@
         JOIN sms_coupon c ON c.id = ch.coupon_id
         WHERE
             ch.id = #{id}
-        AND ch.use_status = 0
-        AND c.min_point <![CDATA[<=]]> ${amount}
+            AND ch.use_status = 0
+            AND c.min_point <![CDATA[<=]]> ${amount}
     </select>
     <select id="getDisableCouponsByMemberId" resultType="com.aaa.lee.app.vo.MemberAllCouponVO">
      SELECT
