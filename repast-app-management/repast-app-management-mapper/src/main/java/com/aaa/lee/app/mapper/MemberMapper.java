@@ -6,5 +6,7 @@ import tk.mybatis.mapper.common.Mapper;
 import java.util.List;
 
 public interface MemberMapper extends Mapper<Member> {
+    Member getMemberInforMemberId(Long memberId);
+    int updateMemberInfoMemberId(Member member);
 
 }

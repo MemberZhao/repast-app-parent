@@ -187,4 +187,20 @@ public interface IRepastService {
      */
     @GetMapping("/selectAllCollect")
     ResultData selectAllCollect(@RequestParam("openId") String openId);
+    /**
+     * 通过id 查询用户信息
+     * @param member
+     * @return
+     */
+    @GetMapping("/getMemberId")
+    Member getMemberById (@RequestParam("memberId") Long memberId);
+
+    /**
+     * 根据id修改用户信息
+     * @param memberId
+     * @return
+     */
+    @PostMapping("/updateMemberId")
+    int updateMemberById(@RequestBody Member member);
+
 }

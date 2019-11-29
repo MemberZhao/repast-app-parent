@@ -119,6 +119,15 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
             public ResultData selectAllCollect(String openId) {
                 return null;
             }
+            @Override
+            public Member getMemberById(Long memberId) {
+                return null;
+            }
+
+            @Override
+            public int updateMemberById(Member member) {
+                return 0;
+            }
         };
         return repastService;
     }

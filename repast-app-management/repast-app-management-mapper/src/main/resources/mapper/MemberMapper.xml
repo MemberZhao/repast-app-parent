@@ -37,5 +37,10 @@
   <select id="updateMemberBalance" parameterType="long" resultMap="BaseResultMap">
     update ums_member set member_balacne=member_balacne+#{money} where id=#{memberId}
   </select>
+  <update id="updateMemberInfoMemberId" parameterType="com.aaa.lee.app.domain.Member" >
+      update ums_member set nickname=#{nickname},password=#{password},birthday=#{birthday},city=#{city},job=#{job} where id =#{id}
+    </update>
+  <select id="getMemberInforMemberId" parameterType="long" resultType="com.aaa.lee.app.domain.Member">
+  select nickname from ums_member where id =#{id}
 
 </mapper>
