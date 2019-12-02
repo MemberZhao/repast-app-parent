@@ -31,16 +31,20 @@ import java.util.List;
 public interface IRepastService {
 
     /**
-     * @author Seven Lee
-     * @description
-     *      执行登录操作
-     * @param [member]
-     * @date 2019/11/21
-     * @return java.lang.Boolean
-     * @throws 
-    **/
+     * 执行登录
+     * @param member
+     * @return
+     */
     @PostMapping("/login")
-    Boolean doLogin(@RequestBody Member member);
+    String doLogin(@RequestBody Member member);
+
+    /**
+     * 接收用户信息
+     * @param member
+     * @return
+     */
+    @PostMapping("/userMessage")
+    String newUser(@RequestBody Member member);
 
     /**
      * @author Seven Lee

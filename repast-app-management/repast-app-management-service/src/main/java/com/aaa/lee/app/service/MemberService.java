@@ -3,6 +3,7 @@ package com.aaa.lee.app.service;
 import com.aaa.lee.app.base.BaseService;
 import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.mapper.MemberMapper;
+import com.aaa.lee.app.utils.IDUtil;
 import com.aaa.lee.app.utils.JSONUtil;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,30 +30,55 @@ public class MemberService extends BaseService<Member> {
     public Mapper<Member> getMapper() {
         return memberMapper;
     }
+    /**
+     * 执行登录操作
+     * @param member
+     * @param Member
+     * @return
+     */
+    public String doLogin(Member member){
+        try {
+            Member member1 = super.selectOne(member);
+            String token = member.getOpenId()+IDUtil.getUUID();
+
+            if (null != member1){
+                //数据库中有数据，登录成功
+                member1.setToken(token);
+                memberMapper.updateByPrimaryKey(member1);
+                return token;
+            }else {
+                member.setToken(token);
+                memberMapper.insert(member);
+                return token;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
     /**
-     * @author Seven Lee
-     * @description
-     *      执行登录操作
-     * @param [member, redisService]
-     * @date 2019/11/21
-     * @return java.lang.Boolean
-     * @throws
-    **/
-    public Boolean doLogin(Member member, RedisService redisService) {
-        try {
-            Member mbr = super.selectOne(member);
-            if(null != mbr) {
-                // 说明从数据库中查询到数据，说明登录成功
-                // 应该把用户对象存入session中，session跨域了，就使用redis解决(redis也有问题)
-                mbr.setPassword(null);
-                String mbrString = JSONUtil.toJsonString(mbr);
-                String setResult = redisService.set(REDIS_KEY, mbrString);
-                if(OK.equals(setResult.toUpperCase())) {
-                    // 说明redis存入成功
-                    return true;
-                }
+     * 获取用户信息
+     * @param member
+     * @param redisService
+     * @return
+     */
+
+    public String newUser(Member member){
+
+        if(null != member ){
+            String token = member.getOpenId()+ IDUtil.getUUID();
+            member.setToken(token);
+            if ( memberMapper.insert(member) > 0){
+                return token;
+            }
+            return null;
+        }
+        return null;
+    }
+
+
                 /**
                  * 如果涉及到session的跨域:
                  *      如果是ajax，session跨域传递数据必须使用jsonp
@@ -66,12 +92,7 @@ public class MemberService extends BaseService<Member> {
                  *          如果执行了则就是幻读
                  *          如果没有执行就是脏读
                  */
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+
 
     /**
      * @author shenzhendong
@@ -81,12 +102,5 @@ public class MemberService extends BaseService<Member> {
      * @param
      * @return
      **/
-    public Member isLogin(RedisService redisService, String openId){
-        String mbrString = redisService.get(openId);
-        Member member = JSONUtil.toObject(mbrString, Member.class);
-        if (null != member){
-            return member;
-        }
-        return null;
-    }
+
 }

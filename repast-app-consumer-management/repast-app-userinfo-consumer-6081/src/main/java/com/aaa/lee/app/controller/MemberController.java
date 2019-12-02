@@ -32,22 +32,31 @@ public class MemberController extends BaseController {
     private IRepastService repastService;
 
     /**
-     * @author Seven Lee
-     * @description
-     *      执行登录操作
-     * @param [member]
-     * @date 2019/11/21
-     * @return com.aaa.lee.app.base.ResultData
-     * @throws
-    **/
+     * 登录
+     * @param member
+     * @return
+     */
     @PostMapping("/login")
-    @ApiOperation(value = "登录", notes = "执行登录操作")
-    public ResultData doLogin(Member member) {
-        if(repastService.doLogin(member)) {
-            return success();
-        } else {
-            return failed();
+    @ApiOperation(value = "登录",notes = "执行登陆操作")
+    public ResultData doLogin(Member member){
+        String token = repastService.doLogin(member);
+        return success("登录成功",token);
+    }
+
+    /**
+     * 接收用户信息
+     * @param member
+     * @return
+     */
+    @PostMapping("/userMessage")
+    @ApiOperation(value = "微信",notes = "接收微信认证的信息")
+    public ResultData getMessage(Member member){
+        System.out.println(member);
+        String token = repastService.newUser(member);
+        if (null != token && "".equals(token)){
+            return success("存储成功",token);
         }
+        return failed("储存失败");
     }
 
     /**

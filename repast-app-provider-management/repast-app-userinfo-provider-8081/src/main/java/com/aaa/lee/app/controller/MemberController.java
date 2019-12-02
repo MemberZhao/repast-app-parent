@@ -22,19 +22,19 @@ public class MemberController {
     private MemberService memberService;
     @Autowired
     private RedisService redisService;
+    @PostMapping("/userMessage")
+    public  String newUser(@RequestBody Member member)throws Exception{
+        return memberService.newUser(member);
+    }
 
     /**
-     * @author Seven Lee
-     * @description
-     *      执行登录操作
-     * @param [member]
-     * @date 2019/11/21
-     * @return java.lang.Boolean
-     * @throws 
-    **/
+     * 执行登录
+     * @param member
+     * @return
+     */
     @PostMapping("/login")
-    public Boolean doLogin(@RequestBody Member member) {
-        return memberService.doLogin(member, redisService);
+    public String doLogin(@RequestBody Member member) throws Exception {
+        return memberService.doLogin(member);
     }
 
 }
