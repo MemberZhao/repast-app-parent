@@ -135,6 +135,9 @@ FROM
     <select id="selectProductStatusById" resultType="java.lang.Integer" parameterType="Long">
 		select publish_status FROM pms_product where id=#{productId}
 	</select>
+    <select id="selectMemberByToken" resultType="com.aaa.lee.app.domain.Member">
+		select * from ums_member where token=#{token}
+	</select>
 
 
     <!--  <insert id="addCollectByMemberIdAndProductId" parameterType="map">-->

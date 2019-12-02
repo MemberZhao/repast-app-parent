@@ -7,7 +7,6 @@ import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.domain.OmsOrder;
 import com.aaa.lee.app.domain.PmsProduct;
 import com.aaa.lee.app.mapper.CollectMapper;
-import com.aaa.lee.app.utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.common.Mapper;
@@ -39,15 +38,15 @@ CollectService extends BaseService<Collect> {
      * @param redisService
      * @return
      */
-    public ResultData toCollect(Long productId, String openId, RedisService redisService){
-        String memberString = redisService.get(openId);
-        Member member = JSONUtil.toObject(memberString, Member.class);
-        collect.setMemberId(member.getId());
-        collect.setProductId(productId);
+    public ResultData toCollect(Long productId, String token){
         //判断商品当前状态  i=1 上架
         int i = collectMapper.selectProductStatusById(productId);
         if (i == 1){
-            if (null!= member ){
+            if (null !=token ||"".equals(token) ){
+                Member member = collectMapper.selectMemberByToken(token);
+                collect.setMemberId(member.getId());
+                collect.setProductId(productId);
+                //查询是否已经收藏该商品
                 Collect collect1 = collectMapper.selectIfCollectProduct(this.collect);
                 if (null != collect1){
                     //查询数据库有数据  说明该用户已经收藏该商品，再次点击时，应该执行取消收藏操作
@@ -82,12 +81,14 @@ CollectService extends BaseService<Collect> {
      * @param redisService
      * @return
      */
-    public ResultData toCollectOrder(Long orderId, String openId, RedisService redisService){
-        String memberString = redisService.get(openId);
-        Member member = JSONUtil.toObject(memberString, Member.class);
-        collect.setMemberId(member.getId());
-        collect.setOrderId(orderId);
-        if (null!= member ){
+    public ResultData toCollectOrder(Long orderId, String token){
+
+        if (null !=token ||"".equals(token) ){
+
+            Member member = collectMapper.selectMemberByToken(token);
+            collect.setMemberId(member.getId());
+            collect.setOrderId(orderId);
+            //去数据库中查询该用户是否收藏该订单
             Collect collect1 = collectMapper.selectIfCollectOrder(collect);
             if (null != collect1){
                 //收藏表中有该订单时，点击取消收藏该订单
@@ -112,10 +113,10 @@ CollectService extends BaseService<Collect> {
      * @param redisService
      * @return
      */
-    public ResultData selectAllCollectProduct(String openId, RedisService redisService){
-        String memberString = redisService.get(openId);
-        Member member = JSONUtil.toObject(memberString, Member.class);
-        if (null != member){
+    public ResultData selectAllCollectProduct(String token){
+
+        if (null !=token ||"".equals(token)){
+            Member member = collectMapper.selectMemberByToken(token);
             List<PmsProduct> pmsProductList = collectMapper.selectAllCollectProductByMemberId(member.getId());
             resultData.setCode(WIN);
             resultData.setData(pmsProductList);
@@ -131,12 +132,11 @@ CollectService extends BaseService<Collect> {
      * 查询当前用户的所有订单收藏
      * @return
      */
-    public ResultData selectAllCollectOrder(String openId, RedisService redisService){
-        String memberString = redisService.get(openId);
-        Member member = JSONUtil.toObject(memberString, Member.class);
-        if (null != member){
-            List<OmsOrder> omsOrderList = collectMapper.selectAllCollectOrderByMemberId(member.getId());
+    public ResultData selectAllCollectOrder(String token){
 
+        if (null !=token ||"".equals(token)){
+            Member member = collectMapper.selectMemberByToken(token);
+            List<OmsOrder> omsOrderList = collectMapper.selectAllCollectOrderByMemberId(member.getId());
             resultData.setCode(WIN);
             resultData.setData(omsOrderList);
             return resultData;
@@ -147,14 +147,14 @@ CollectService extends BaseService<Collect> {
     }
     /**
      * 查询该用户的所有收藏总数
-     * @param openId
+     * @param token
      * @return
      */
 
-    public ResultData selectAllCollect(String openId, RedisService redisService){
-        String memberString = redisService.get(openId);
-        Member member = JSONUtil.toObject(memberString, Member.class);
-        if (null != member){
+    public ResultData selectAllCollect(String token){
+
+        if (null !=token ||"".equals(token)){
+            Member member = collectMapper.selectMemberByToken(token);
             Map<String, Object> collectCount = collectMapper.selectAllCollectCountByMember(member.getId());
             resultData.setCode(WIN);
             resultData.setData(collectCount);

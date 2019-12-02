@@ -23,8 +23,8 @@ public class CollectController extends BaseController {
      */
     @PostMapping("/toCollect")
     @ApiOperation(value = "收藏单品", notes = "执行收藏单品操作")
-    public ResultData collectProduct(Long productId, String openId) {
-       return repastService.toCollect(productId, openId);
+    public ResultData collectProduct(Long productId, String token) {
+       return repastService.toCollect(productId, token);
     }
 
     /**
@@ -34,8 +34,8 @@ public class CollectController extends BaseController {
      */
     @PostMapping("/toCollectOrder")
     @ApiOperation(value = "收藏订单", notes = "执行收藏订单操作")
-    public ResultData toCollectOrder(Long orderId, String openId) {
-       return repastService.toCollectOrder(orderId,openId);
+    public ResultData toCollectOrder(Long orderId, String token) {
+       return repastService.toCollectOrder(orderId,token);
     }
     /**
      * 查询用户所有单品的收藏
@@ -44,8 +44,8 @@ public class CollectController extends BaseController {
      */
     @GetMapping("/selectAllCollectProduct")
     @ApiOperation(value = "查询所有收藏单品", notes = "查询所有的单品的收藏")
-    public ResultData selectAllCollectProduct(String openId) {
-      return repastService.selectAllCollectProduct(openId);
+    public ResultData selectAllCollectProduct(String token) {
+      return repastService.selectAllCollectProduct(token);
     }
     /**
      * 查询用户所有订单的收藏
@@ -54,8 +54,8 @@ public class CollectController extends BaseController {
      */
     @GetMapping("/selectAllCollectOrder")
     @ApiOperation(value = "查询所有收藏订单", notes = "查询该用户所有的收藏订单")
-    public ResultData selectAllCollectOrder(String openId) {
-        return repastService.selectAllCollectOrder(openId);
+    public ResultData selectAllCollectOrder(String token) {
+        return repastService.selectAllCollectOrder(token);
     }
 
 
@@ -67,7 +67,7 @@ public class CollectController extends BaseController {
      */
     @GetMapping("/selectAllCollect")
     @ApiOperation(value = "用户收藏总数", notes = "执行查询该用户的所有收藏总数")
-    public ResultData selectAllCollect(String openId) {
-       return repastService.selectAllCollect(openId);
+    public ResultData selectAllCollect(String token) {
+       return repastService.selectAllCollect(token);
   }
 }

@@ -1,6 +1,7 @@
 package com.aaa.lee.app.mapper;
 
 import com.aaa.lee.app.domain.Collect;
+import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.domain.OmsOrder;
 import com.aaa.lee.app.domain.PmsProduct;
 import tk.mybatis.mapper.common.Mapper;
@@ -60,4 +61,5 @@ public interface CollectMapper<Internal> extends Mapper<Collect> {
      */
     Collect selectIfCollectOrder(Collect collect);
 
+    Member selectMemberByToken(String token);
 }
