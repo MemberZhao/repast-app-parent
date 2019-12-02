@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 @Service
 public class MemberInforService extends BaseService<Member> {
     @Autowired
@@ -23,7 +25,24 @@ public class MemberInforService extends BaseService<Member> {
      */
     public Member getMemberInforMemberId(Long memberId){
          return memberMapper.getMemberInforMemberId(memberId);
+    }
 
+
+    /**
+     * 通过openId查询用户信息
+     * @param openId
+     * @return
+     */
+    public Member getMemberInforOpenId(String openId){
+        if (null == openId || "".equals(openId)){
+            return null;
+        } else {
+            List<Member> memberInforOpenId = memberMapper.getMemberInforOpenId(openId);
+            if (memberInforOpenId.size()>0){
+                return memberInforOpenId.get(0);
+            }
+            return null;
+        }
     }
 
     /**

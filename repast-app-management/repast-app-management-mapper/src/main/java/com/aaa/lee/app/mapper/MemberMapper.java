@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface MemberMapper extends Mapper<Member> {
     Member getMemberInforMemberId(Long memberId);
+
+    List<Member> getMemberInforOpenId(String openId);
+
     int updateMemberInfoMemberId(Member member);
 
 }
