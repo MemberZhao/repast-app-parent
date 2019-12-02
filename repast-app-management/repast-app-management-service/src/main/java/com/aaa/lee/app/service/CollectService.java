@@ -42,7 +42,7 @@ CollectService extends BaseService<Collect> {
         //判断商品当前状态  i=1 上架
         int i = collectMapper.selectProductStatusById(productId);
         if (i == 1){
-            if (null !=token ||"".equals(token) ){
+            if (null !=token ||!"".equals(token) ){
                 Member member = collectMapper.selectMemberByToken(token);
                 collect.setMemberId(member.getId());
                 collect.setProductId(productId);
@@ -83,7 +83,7 @@ CollectService extends BaseService<Collect> {
      */
     public ResultData toCollectOrder(Long orderId, String token){
 
-        if (null !=token ||"".equals(token) ){
+        if (null !=token ||!"".equals(token) ){
 
             Member member = collectMapper.selectMemberByToken(token);
             collect.setMemberId(member.getId());
@@ -115,7 +115,7 @@ CollectService extends BaseService<Collect> {
      */
     public ResultData selectAllCollectProduct(String token){
 
-        if (null !=token ||"".equals(token)){
+        if (null !=token ||!"".equals(token)){
             Member member = collectMapper.selectMemberByToken(token);
             List<PmsProduct> pmsProductList = collectMapper.selectAllCollectProductByMemberId(member.getId());
             resultData.setCode(WIN);
@@ -134,7 +134,7 @@ CollectService extends BaseService<Collect> {
      */
     public ResultData selectAllCollectOrder(String token){
 
-        if (null !=token ||"".equals(token)){
+        if (null !=token ||!"".equals(token)){
             Member member = collectMapper.selectMemberByToken(token);
             List<OmsOrder> omsOrderList = collectMapper.selectAllCollectOrderByMemberId(member.getId());
             resultData.setCode(WIN);
@@ -153,7 +153,7 @@ CollectService extends BaseService<Collect> {
 
     public ResultData selectAllCollect(String token){
 
-        if (null !=token ||"".equals(token)){
+        if (null !=token ||!"".equals(token)){
             Member member = collectMapper.selectMemberByToken(token);
             Map<String, Object> collectCount = collectMapper.selectAllCollectCountByMember(member.getId());
             resultData.setCode(WIN);
