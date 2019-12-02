@@ -26,17 +26,16 @@ public class CouponController extends BaseController {
     private MemberInforService memberInforService;
     @Autowired
     private CouponService couponService;
-    @Autowired
-    private MemberService memberService;
+
 
     /**
      * 获取领券中心用户所有的可见优惠券信息
      * @return
      **/
     @GetMapping("/getUsableCoupons")
-    public ResultData<List<UsableCouponVO>> getAllUsableCoupons(@RequestParam("openId") String openId){
+    public ResultData<List<UsableCouponVO>> getAllUsableCoupons(@RequestParam("token") String token){
 
-        Member m = memberInforService.getMemberInforOpenId(openId);
+        Member m = memberInforService.getMemberInforToken(token);
         if (null != m){
             List<UsableCouponVO> allUsableCoupons = couponService.getAllUsableCoupons(m.getMemberLevelId());
             if (allUsableCoupons.size()>0){
@@ -52,9 +51,9 @@ public class CouponController extends BaseController {
      * @return
      **/
     @GetMapping("/getAllCouponsByMemberId")
-    public ResultData<List> getAllCouponsByMemberId(@RequestParam("openId") String openId){
+    public ResultData<List> getAllCouponsByMemberId(@RequestParam("token") String token){
 
-        Member m = memberInforService.getMemberInforOpenId(openId);
+        Member m = memberInforService.getMemberInforToken(token);
         if (null != m){
             List<MemberAllCouponVO> allCouponsByMemberId = couponService.getAllCouponsByMemberId(m.getId());
             if (allCouponsByMemberId.size()>0){
@@ -70,9 +69,9 @@ public class CouponController extends BaseController {
      * @return
      **/
     @GetMapping("/getUsableCouponsByMemberId")
-    ResultData<List> getUsableCouponsByMemberId(@RequestParam("openId") String openId){
+    ResultData<List> getUsableCouponsByMemberId(@RequestParam("token") String token){
 
-        Member m = memberInforService.getMemberInforOpenId(openId);
+        Member m = memberInforService.getMemberInforToken(token);
         if (null != m){
             List<MemberAllCouponVO> usableCouponsByMemberId = couponService.getUsableCouponsByMemberId(m.getId());
             if (usableCouponsByMemberId.size()>0){
@@ -88,9 +87,9 @@ public class CouponController extends BaseController {
      * @return
      **/
     @GetMapping("/getDisableCouponsByMemberId")
-    public ResultData<List> getDisableCouponsByMemberId(@RequestParam("openId") String openId){
+    public ResultData<List> getDisableCouponsByMemberId(@RequestParam("token") String token){
 
-        Member m = memberInforService.getMemberInforOpenId(openId);
+        Member m = memberInforService.getMemberInforToken(token);
         if (null != m){
             List<MemberAllCouponVO> disableCouponsByMemberId = couponService.getDisableCouponsByMemberId(m.getId());
             if (disableCouponsByMemberId.size()>0){
@@ -106,9 +105,9 @@ public class CouponController extends BaseController {
      * @return
      **/
     @GetMapping("/getUsableCouponsByMemberIdAndShopId")
-    public ResultData<List> getUsableCouponsByMemberIdAndShopId(@RequestParam("shopId") Long shopId, @RequestParam("openId") String openId){
+    public ResultData<List> getUsableCouponsByMemberIdAndShopId(@RequestParam("shopId") Long shopId, @RequestParam("token") String token){
 
-        Member m = memberInforService.getMemberInforOpenId(openId);
+        Member m = memberInforService.getMemberInforToken(token);
         if (null != m){
             List<MemberAllCouponVO> usableCouponsByMemberIdAndShopId = couponService.getUsableCouponsByMemberIdAndShopId(m, shopId);
             if (null == usableCouponsByMemberIdAndShopId){
@@ -127,9 +126,9 @@ public class CouponController extends BaseController {
      * @return
      **/
     @GetMapping("/receiveCouponAffair")
-    public ResultData receiveCouponAffair(@RequestParam("couponId") Long couponId, @RequestParam("openId") String openId){
+    public ResultData receiveCouponAffair(@RequestParam("couponId") Long couponId, @RequestParam("token") String token){
 
-        Member m = memberInforService.getMemberInforOpenId(openId);
+        Member m = memberInforService.getMemberInforToken(token);
         if (null != m){
             Long l = couponService.checkCouponStatusFromAllCouponList(couponId, m.getId());
             if (null != l || "".equals(l)){
@@ -154,9 +153,9 @@ public class CouponController extends BaseController {
      * @return
      **/
     @GetMapping("/useCouponAffair")
-    public ResultData useCouponAffair(@RequestParam("couponHistoryId") Long couponHistoryId, @RequestParam("openId") String openId, @RequestParam("amount") Double amount){
+    public ResultData useCouponAffair(@RequestParam("couponHistoryId") Long couponHistoryId, @RequestParam("token") String token, @RequestParam("amount") Double amount){
 
-        Member m = memberInforService.getMemberInforOpenId(openId);
+        Member m = memberInforService.getMemberInforToken(token);
         if (null != m){
             int i = couponService.checkCouponStatusFromMemberListByCouponHistoryId(couponHistoryId, amount);
             if (i > 0) {

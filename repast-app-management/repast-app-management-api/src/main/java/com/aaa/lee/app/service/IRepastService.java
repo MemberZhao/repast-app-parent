@@ -106,49 +106,49 @@ public interface IRepastService {
      * @return
      **/
     @GetMapping("/getUsableCoupons")
-    ResultData<List<UsableCouponVO>> getAllUsableCoupons(@RequestParam("openId") String openId);
+    ResultData<List<UsableCouponVO>> getAllUsableCoupons(@RequestParam("token") String token);
 
     /**
      * 获取用户所有优惠券
      * @return
      **/
     @GetMapping("/getAllCouponsByMemberId")
-    ResultData<List> getAllCouponsByMemberId(@RequestParam("openId") String openId);
+    ResultData<List> getAllCouponsByMemberId(@RequestParam("token") String token);
 
     /**
      * 获取用户所有可用优惠券
      * @return
      **/
     @GetMapping("/getUsableCouponsByMemberId")
-    ResultData<List> getUsableCouponsByMemberId(@RequestParam("openId") String openId);
+    ResultData<List> getUsableCouponsByMemberId(@RequestParam("token") String token);
 
     /**
      * 获取用户当前店铺所有可用优惠券
      * @return
      **/
     @GetMapping("/getUsableCouponsByMemberIdAndShopId")
-    ResultData<List> getUsableCouponsByMemberIdAndShopId(@RequestParam("shopId") Long shopId, @RequestParam("openId") String openId);
+    ResultData<List> getUsableCouponsByMemberIdAndShopId(@RequestParam("shopId") Long shopId, @RequestParam("token") String token);
 
     /**
      * 获取用户所有不可用优惠券
      * @return
      **/
     @GetMapping("/getDisableCouponsByMemberId")
-    ResultData<List> getDisableCouponsByMemberId(@RequestParam("openId") String openId);
+    ResultData<List> getDisableCouponsByMemberId(@RequestParam("token") String token);
 
     /**
      * 领取优惠券
      * @return
      **/
     @GetMapping("/receiveCouponAffair")
-    ResultData receiveCouponAffair(@RequestParam("couponId") Long couponId, @RequestParam("openId") String openId);
+    ResultData receiveCouponAffair(@RequestParam("couponId") Long couponId, @RequestParam("token") String token);
 
     /**
      * 使用优惠券
      * @return
      **/
     @GetMapping("/useCouponAffair")
-    ResultData useCouponAffair(@RequestParam("couponHistoryId") Long couponHistoryId, @RequestParam("openId") String openId, @RequestParam("amount") Double amount);
+    ResultData useCouponAffair(@RequestParam("couponHistoryId") Long couponHistoryId, @RequestParam("token") String token, @RequestParam("amount") Double amount);
 
     /**
      * 单品收藏
@@ -156,7 +156,7 @@ public interface IRepastService {
      * @return
      */
     @PostMapping("/toCollect")
-    ResultData toCollect(@RequestParam("productId") Long productId, @RequestParam("openId") String openId);
+    ResultData toCollect(@RequestParam("productId") Long productId, @RequestParam("token") String token);
 
     /**
      * 订单收藏
@@ -164,29 +164,29 @@ public interface IRepastService {
      * @return
      */
     @PostMapping("/toCollectOrder")
-    ResultData toCollectOrder(@RequestParam("orderId") Long orderId, @RequestParam("openId") String openId);
+    ResultData toCollectOrder(@RequestParam("orderId") Long orderId, @RequestParam("token") String token);
 
     /**
      * 查询当前用户的所有单品收藏
      * @return
      */
     @GetMapping("/selectAllCollectProduct")
-    ResultData selectAllCollectProduct(@RequestParam("openId") String openId);
+    ResultData selectAllCollectProduct(@RequestParam("token") String token);
 
     /**
      * 查询当前用户的所有的订单收藏
-     * @param openId
+     * @param token
      * @return
      */
     @GetMapping("/selectAllCollectOrder")
-    ResultData selectAllCollectOrder(@RequestParam("openId")String openId);
+    ResultData selectAllCollectOrder(@RequestParam("token")String token);
     /**
      * 查询该用户的所有收藏总数
-     * @param openId
+     * @param token
      * @return
      */
     @GetMapping("/selectAllCollect")
-    ResultData selectAllCollect(@RequestParam("openId") String openId);
+    ResultData selectAllCollect(@RequestParam("token") String token);
     /**
      * 通过id 查询用户信息
      * @param member

@@ -61,62 +61,62 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
             }
 
             @Override
-            public ResultData<List<UsableCouponVO>> getAllUsableCoupons(String openId) {
+            public ResultData<List<UsableCouponVO>> getAllUsableCoupons(String token) {
                 return null;
             }
 
             @Override
-            public ResultData<List> getAllCouponsByMemberId(String openId) {
+            public ResultData<List> getAllCouponsByMemberId(String token) {
                 return null;
             }
 
             @Override
-            public ResultData<List> getUsableCouponsByMemberId(String openId) {
+            public ResultData<List> getUsableCouponsByMemberId(String token) {
                 return null;
             }
 
             @Override
-            public ResultData<List> getUsableCouponsByMemberIdAndShopId(Long shopId, String openId) {
+            public ResultData<List> getUsableCouponsByMemberIdAndShopId(Long shopId, String token) {
                 return null;
             }
 
             @Override
-            public ResultData<List> getDisableCouponsByMemberId(String openId) {
+            public ResultData<List> getDisableCouponsByMemberId(String token) {
                 return null;
             }
 
             @Override
-            public ResultData receiveCouponAffair(Long couponId, String openId) {
+            public ResultData receiveCouponAffair(Long couponId, String token) {
                 return null;
             }
 
             @Override
-            public ResultData useCouponAffair(Long couponHistoryId, String openId, Double amount) {
+            public ResultData useCouponAffair(Long couponHistoryId, String token, Double amount) {
                 return null;
             }
 
             @Override
-            public ResultData toCollect(Long productId, String openId) {
+            public ResultData toCollect(Long productId, String token) {
                 return null;
             }
 
             @Override
-            public ResultData toCollectOrder(Long orderId, String openId) {
+            public ResultData toCollectOrder(Long orderId, String token) {
                 return null;
             }
 
             @Override
-            public ResultData selectAllCollectProduct(String openId) {
+            public ResultData selectAllCollectProduct(String token) {
                 return null;
             }
 
             @Override
-            public ResultData selectAllCollectOrder(String openId) {
+            public ResultData selectAllCollectOrder(String token) {
                 return null;
             }
 
             @Override
-            public ResultData selectAllCollect(String openId) {
+            public ResultData selectAllCollect(String token) {
                 return null;
             }
             @Override

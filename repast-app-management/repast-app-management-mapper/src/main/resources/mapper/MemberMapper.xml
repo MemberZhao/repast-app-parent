@@ -37,7 +37,7 @@
   <select id="getMemberInforMemberId" parameterType="long" resultType="com.aaa.lee.app.domain.Member">
     select nickname from ums_member where id =#{id}
   </select>
-  <select id="getMemberInforOpenId" resultType="com.aaa.lee.app.domain.Member">
-    select * from ums_member where open_id =#{openId}
+  <select id="getMemberInforToken" resultType="com.aaa.lee.app.domain.Member">
+    select * from ums_member where token =#{token}
   </select>
 </mapper>

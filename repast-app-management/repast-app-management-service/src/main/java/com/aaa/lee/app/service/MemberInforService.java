@@ -29,17 +29,17 @@ public class MemberInforService extends BaseService<Member> {
 
 
     /**
-     * 通过openId查询用户信息
-     * @param openId
+     * 通过token查询用户信息
+     * @param token
      * @return
      */
-    public Member getMemberInforOpenId(String openId){
-        if (null == openId || "".equals(openId)){
+    public Member getMemberInforToken(String token){
+        if (null == token || "".equals(token)){
             return null;
         } else {
-            List<Member> memberInforOpenId = memberMapper.getMemberInforOpenId(openId);
-            if (memberInforOpenId.size()>0){
-                return memberInforOpenId.get(0);
+            List<Member> memberInfortoken = memberMapper.getMemberInforToken(token);
+            if (memberInfortoken.size()>0){
+                return memberInfortoken.get(0);
             }
             return null;
         }
