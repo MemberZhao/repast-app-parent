@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaa.lee.app.mapper.MemberCommentReplayMapper" >
+  <resultMap id="BaseResultMap" type="com.aaa.lee.app.domain.MemberCommentReplay" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comment_id" property="commentId" jdbcType="BIGINT" />
+    <result column="member_nick_name" property="memberNickName" jdbcType="VARCHAR" />
+    <result column="member_icon" property="memberIcon" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectCommentReplay" parameterType="Long" resultType="com.aaa.lee.app.domain.MemberCommentReplay">
+        select pcr.id ,pcr.comment_id commentId,pcr.member_nick_name memberNickName,pcr.content,
+        pcr.create_time createTime,pcr.type
+        from pms_comment pcm
+        inner join pms_comment_replay pcr
+        on pcm.id=pcr.comment_id where comment_id=#{commentId}
+  </select>
+</mapper>

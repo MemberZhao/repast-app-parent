@@ -1,15 +1,14 @@
 package com.aaa.lee.app.fallback;
 
 import com.aaa.lee.app.base.ResultData;
-import com.aaa.lee.app.domain.Member;
-import com.aaa.lee.app.domain.MemberReceiveAddress;
-import com.aaa.lee.app.domain.Product;
-import com.aaa.lee.app.domain.ProductCat;
+import com.aaa.lee.app.domain.*;
 import com.aaa.lee.app.service.IRepastService;
+import com.aaa.lee.app.vo.MemberCommentVo;
 import com.aaa.lee.app.vo.ShopInfoVo;
 import com.aaa.lee.app.vo.UsableCouponVO;
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,8 +25,13 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
     public IRepastService create(Throwable throwable) {
         IRepastService repastService = new IRepastService() {
             @Override
-            public Boolean doLogin(Member member) {
+            public String doLogin(Member member) {
                 System.out.println("测试登录熔断数据");
+                return null;
+            }
+
+            @Override
+            public String newUser(Member member) {
                 return null;
             }
 
@@ -128,6 +132,42 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
             public int updateMemberById(Member member) {
                 return 0;
             }
+
+            @Override
+            public List<MemberCommentVo> getMemberComment(String token) {
+                System.out.println("测试评价列表熔断数据");
+
+                return null;
+            }
+
+            @Override
+            public Boolean deleteComment(Long id,String token) {
+                System.out.println("测试删除评价列表熔断数据");
+                return false;
+            }
+
+            @Override
+            public Boolean insertComment(MemberComment comment, String token) {
+                System.out.println("测试添加评价信息熔断数据");
+                return false;
+            }
+
+            @Override
+            public Boolean insertComplain(MemberComplain complain,String token) {
+                System.out.println("测试添加用户意见信息熔断数据");
+                return false;
+            }
+
+            @Override
+            public String uploadHead(MultipartFile file) {
+                return null;
+            }
+
+            @Override
+            public String upload(MultipartFile[] file) {
+                return null;
+            }
+
         };
         return repastService;
     }

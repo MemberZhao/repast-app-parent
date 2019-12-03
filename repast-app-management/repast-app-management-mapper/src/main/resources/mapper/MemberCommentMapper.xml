@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaa.lee.app.mapper.MemberCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.aaa.lee.app.domain.MemberComment" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="shop_id" property="shopId" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="member_nick_name" property="memberNickName" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="star" property="star" jdbcType="INTEGER" />
+    <result column="member_ip" property="memberIp" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="show_status" property="showStatus" jdbcType="INTEGER" />
+    <result column="product_attribute" property="productAttribute" jdbcType="VARCHAR" />
+    <result column="collect_count" property="collectCount" jdbcType="INTEGER" />
+    <result column="read_count" property="readCount" jdbcType="INTEGER" />
+    <result column="pics" property="pics" jdbcType="VARCHAR" />
+    <result column="member_icon" property="memberIcon" jdbcType="VARCHAR" />
+    <result column="replay_count" property="replayCount" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <select id="selectMemberComment" parameterType="Long" resultType="com.aaa.lee.app.vo.MemberCommentVo">
+        select pcm.id,pcm.shop_id shopId,pcm.order_id orderId,pcm.member_nick_name memberNickName,pcm.star,pcm.member_ip memberIp,pcm.create_time createTime,
+        pcm.show_status showStatus,pcm.collect_count collectCount,pcm.read_count readCount,pcm.content,pcm.pics,pcm.member_icon memberIcon,
+        pcm.replay_count replayCount  from pms_comment pcm  join oms_order ood on ood.id=pcm.order_id
+        where member_id=1
+  </select>
+  <select id="selectProComment" parameterType="Long" resultType="com.aaa.lee.app.vo.CommentProVo">
+    select
+	ooi.order_id orderId,ooi.product_id productId,ooi.product_name productName,ppa.name
+        from oms_order ood
+        join oms_order_item ooi on ooi.order_id = ood.id
+        join pms_product_attribute ppa ON ooi.product_id = ppa.id
+        join pms_comment pcm on pcm.order_id = ood.id
+        where ooi.order_id =#{orderId}
+        group by ooi.id
+  </select>
+    <select id="getMemberByToken" parameterType="String" resultType="com.aaa.lee.app.domain.Member">
+        select * from ums_member where token=#{token}
+    </select>
+</mapper>

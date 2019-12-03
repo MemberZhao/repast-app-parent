@@ -1,6 +1,7 @@
 package com.aaa.lee.app.base;
 
 import com.aaa.lee.app.status.LoginStatus;
+import com.aaa.lee.app.status.StatusEnum;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -114,6 +115,73 @@ public class BaseController {
         resultData.setCode(LoginStatus.LOGIN_FAILED.getCode());
         resultData.setMsg(msg);
         resultData.setData(data);
+        return resultData;
+    }
+    /**
+     * 查询成功，自定义消息，自定义返回值
+     * @return
+     */
+    protected  ResultData querySuccess(String msg, Object data){
+        ResultData resultData = new ResultData();
+        resultData.setCode(StatusEnum.SUCCESS.getCode());
+        resultData.setMsg(msg);
+        resultData.setData(data);
+        return resultData;
+    }
+
+    /**
+     * 查询失败，自定义消息
+     * @return
+     */
+    protected ResultData queryFailed(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(StatusEnum.FAILED.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
+
+    /**
+     * 删除评价成功，自定义返回消息
+     * @return
+     */
+    protected  ResultData delSuccess(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(StatusEnum.DELETE_OPERATION.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
+
+    /**
+     * 删除评价失败，自定义返回消息
+     * @return
+     */
+    protected ResultData delFailed(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(StatusEnum.DELETE_OPERATION.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
+
+    /**
+     * 添加评价成功，自定义返回消息
+     * @return
+     */
+    protected  ResultData addSuccess(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(StatusEnum.INSERT_OPERATION.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
+
+    /**
+     * 添加评价失败，自定义返回消息
+     * @param msg
+     * @return
+     */
+    protected  ResultData addFailed(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(StatusEnum.INSERT_OPERATION.getCode());
+        resultData.setMsg(msg);
         return resultData;
     }
 }

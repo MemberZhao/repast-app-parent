@@ -1,18 +1,15 @@
 package com.aaa.lee.app.service;
 
 import com.aaa.lee.app.base.ResultData;
-import com.aaa.lee.app.domain.Member;
-import com.aaa.lee.app.domain.MemberReceiveAddress;
-import com.aaa.lee.app.domain.Product;
-import com.aaa.lee.app.domain.ProductCat;
+import com.aaa.lee.app.domain.*;
 import com.aaa.lee.app.fallback.RepastFallBackFactory;
+import com.aaa.lee.app.vo.MemberCommentVo;
 import com.aaa.lee.app.vo.ShopInfoVo;
 import com.aaa.lee.app.vo.UsableCouponVO;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -206,5 +203,58 @@ public interface IRepastService {
      */
     @PostMapping("/updateMemberId")
     int updateMemberById(@RequestBody Member member);
+
+    /**
+     * @description
+     * 通过主键获取评价信息列表
+     * @param token
+     * @return
+     *
+     */
+    @GetMapping("/comment")
+    List<MemberCommentVo> getMemberComment(@RequestParam("token") String token);
+
+    /**
+     * 通过主键删除我的评论信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/delComment")
+    Boolean deleteComment(@RequestParam("id") Long id,@RequestParam("token") String token);
+
+    /**
+     * 添加评论信息
+     * @param comment
+     * @param token
+     * @return
+     */
+    @PostMapping("/addComment")
+    Boolean insertComment(@RequestBody MemberComment comment, @RequestParam("token") String token);
+
+    /**
+     * 添加用户意见信息
+     * @param complain
+     * @return
+     */
+    @PostMapping("/addComplain")
+    Boolean insertComplain(@RequestBody MemberComplain complain,@RequestParam("token") String token);
+
+    /**
+     * 单添加图片
+     * @param file
+     * @return
+     */
+
+    @PostMapping(value = "/uploadHead",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    String uploadHead(@RequestPart MultipartFile file);
+
+    /***
+     * 多张图片上传
+     * @param file
+     * @return
+     */
+
+    @PostMapping(value = "/upload",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    String upload(@RequestPart(value = "file") MultipartFile[]  file);
 
 }
