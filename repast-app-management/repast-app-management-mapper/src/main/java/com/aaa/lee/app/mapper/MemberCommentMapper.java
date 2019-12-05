@@ -25,6 +25,13 @@ public interface MemberCommentMapper extends Mapper<MemberComment> {
     List<CommentProVo> selectProComment(Long orderId);
 
     /**
+     * 通过评价主键id
+     * @param id
+     * @return
+     */
+    int updateCommentStatus(Long id);
+
+    /**
      * 通过token查询当前用户信息
      * @param token
      * @return

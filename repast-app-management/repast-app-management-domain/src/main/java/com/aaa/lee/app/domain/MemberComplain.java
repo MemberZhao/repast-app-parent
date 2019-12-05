@@ -25,6 +25,9 @@ public class MemberComplain implements Serializable {
     @Column(name = "member_id")
     private Long memberId;
 
+    @Column(name = "member_nick_name")
+    private String memberNickName;
+
     /**
      * 综合评分星级
      */

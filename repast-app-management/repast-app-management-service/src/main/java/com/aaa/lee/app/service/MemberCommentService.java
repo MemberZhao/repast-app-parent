@@ -48,14 +48,31 @@ public class MemberCommentService extends BaseService<MemberComment> {
     public List<MemberCommentVo> getMemberComment(String token){
         if(null != token || !"".equals(token)){
             Member memberByToken = memberCommentMapper.getMemberByToken(token);
+            System.out.println("commentservice进入了");
             List<MemberCommentVo> memberCommentVos = memberCommentMapper.selectMemberComment(memberByToken.getId());
+            System.out.println("该用户的陪你国家为为"+memberCommentVos.toString());
             if(memberCommentVos.size() > 0){
+                System.out.println("查询shshshshshh");
                 for (MemberCommentVo mcm : memberCommentVos) {
                     Long orderId = mcm.getOrderId();
                     Long commentId = mcm.getId();
+                    Long productId = mcm.getProductId();
+                    // 通过订单id查询该商品的所属的商品信息
                     List<CommentProVo> commentProVos = memberCommentMapper.selectProComment(orderId);
+                    // 判断该评价信息中商品id是否为空
+                    System.out.println("商品id为"+productId);
+                    if(null == productId){
+                        System.out.println("该订单为多个商品");
+                        // 如果为空，则把商品信息存放到该订单所属的评价里
+                        mcm.setMemberCommentVos(commentProVos);
+                    }else{
+                        // 如果不为空，继续执行；
+                        continue;
+                    }
+                    // 通过评价id查询该评价的回复信息
                     List<MemberCommentReplay> memberCommentReplays = memberCommentReplayMapper.selectCommentReplay(commentId);
-                    mcm.setMemberCommentVos(commentProVos);
+
+                    // 把回复信息存放到评价里
                     mcm.setCommentReplays(memberCommentReplays);
                 }
                 System.out.println("该订单的内容有"+memberCommentVos);
@@ -75,7 +92,7 @@ public class MemberCommentService extends BaseService<MemberComment> {
      */
     public Boolean deleteComment(Long id,String token){
         if(null != token || !"".equals(token)){
-            int i = memberCommentMapper.deleteByPrimaryKey(id);
+            int i = memberCommentMapper.updateCommentStatus(id);
             if(i > 0){
                 return true;
             }else{
@@ -91,11 +108,30 @@ public class MemberCommentService extends BaseService<MemberComment> {
      * @param comment
      * @return
      */
-    public Boolean addComment(MemberComment comment, String token){
-        if(null != token || !"".equals(token)){
+    public Boolean addComment(MemberComment comment, String token) {
+        if (null != token || !"".equals(token)) {
             Member member = memberCommentMapper.getMemberByToken(token);
             comment.setMemberNickName(member.getNickname());
             comment.setMemberIcon(member.getIcon());
+            Long orderId = comment.getOrderId();
+            System.out.println("id为" + orderId);
+            // 通过订单id查询该商品的所属的商品信息
+            List<CommentProVo> commentProVos = memberCommentMapper.selectProComment(orderId);
+            System.out.println("订单查询" + commentProVos.toString());
+            if (commentProVos.size() == 1) {
+                // 如果该订单中为单个商品,则添加到评价表中
+                for (CommentProVo commentProVo : commentProVos) {
+                    Long orderId1 = comment.getOrderId();
+                    Long productId = commentProVo.getProductId();
+                    String productName = commentProVo.getProductName();
+                    String name = commentProVo.getName();
+                    comment.setOrderId(orderId1);
+                    comment.setProductId(productId);
+                    comment.setProductName(productName);
+                    comment.setProductAttribute(name);
+                }
+                System.out.println("添加的值为" + comment);
+            }
             //获取当前时间
             Date date = new Date();
             String formatDate = null;
@@ -109,16 +145,17 @@ public class MemberCommentService extends BaseService<MemberComment> {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            // 把当前时间添加到数据库
             comment.setCreateTime(strD);
+            comment.setShowStatus(0);
             int insert = memberCommentMapper.insert(comment);
-            if(insert >0){
-                return  true;
-            }else{
+            if (insert > 0) {
+                return true;
+            } else {
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
-
     }
 }

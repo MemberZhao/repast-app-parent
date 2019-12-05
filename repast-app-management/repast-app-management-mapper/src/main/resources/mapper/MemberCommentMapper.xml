@@ -26,20 +26,29 @@
   <select id="selectMemberComment" parameterType="Long" resultType="com.aaa.lee.app.vo.MemberCommentVo">
         select pcm.id,pcm.shop_id shopId,pcm.order_id orderId,pcm.member_nick_name memberNickName,pcm.star,pcm.member_ip memberIp,pcm.create_time createTime,
         pcm.show_status showStatus,pcm.collect_count collectCount,pcm.read_count readCount,pcm.content,pcm.pics,pcm.member_icon memberIcon,
-        pcm.replay_count replayCount  from pms_comment pcm  join oms_order ood on ood.id=pcm.order_id
-        where member_id=1
+        pcm.replay_count replayCount,pcm.product_id productId,pcm.product_name productName,pcm.product_attribute productAttribute from pms_comment pcm  join oms_order ood on ood.id=pcm.order_id
+        where ood.status=3 and pcm.show_status = 0 and member_id=#{memberId}
   </select>
-  <select id="selectProComment" parameterType="Long" resultType="com.aaa.lee.app.vo.CommentProVo">
-    select
-	ooi.order_id orderId,ooi.product_id productId,ooi.product_name productName,ppa.name
-        from oms_order ood
-        join oms_order_item ooi on ooi.order_id = ood.id
-        join pms_product_attribute ppa ON ooi.product_id = ppa.id
-        join pms_comment pcm on pcm.order_id = ood.id
-        where ooi.order_id =#{orderId}
-        group by ooi.id
+  <select id="selectProComment"  resultType="com.aaa.lee.app.vo.CommentProVo">
+     SELECT
+        ooi.order_id orderId,
+        ooi.product_id productId,
+        ooi.product_name productName,
+        ppa.NAME
+    FROM
+        oms_order ood
+        JOIN oms_order_item ooi ON ooi.order_id = ood.id
+        JOIN pms_product_attribute ppa ON ooi.product_id = ppa.id
+    WHERE
+        ooi.order_id =#{orderId}
   </select>
     <select id="getMemberByToken" parameterType="String" resultType="com.aaa.lee.app.domain.Member">
         select * from ums_member where token=#{token}
     </select>
+    <update id="updateCommentStatus" parameterType="Long">
+        UPDATE pms_comment
+	    SET show_status = 1
+        WHERE
+	    id = #{id}
+    </update>
 </mapper>

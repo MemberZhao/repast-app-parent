@@ -40,6 +40,7 @@ public class MemberComplainService extends BaseService<MemberComplain> {
         if(null != token || !"".equals(token)){
             Member memberByToken = memberComplainMapper.getMemberByToken(token);
             complain.setMemberId(memberByToken.getId());
+            complain.setMemberNickName(memberByToken.getNickname());
             //********
             //获取当前时间
             Date date = new Date();
@@ -65,6 +66,7 @@ public class MemberComplainService extends BaseService<MemberComplain> {
         }else{
             return null;
         }
+
 
     }
 }
