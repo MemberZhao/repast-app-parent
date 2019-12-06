@@ -1,7 +1,6 @@
 package com.aaa.lee.app.service;
 
 
-import com.aaa.lee.app.base.ResultData;
 import com.aaa.lee.app.domain.CouponHistory;
 import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.mapper.CouponMapper;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -75,7 +75,7 @@ public class CouponService {
      * @return
      **/
     @Transactional
-    public boolean receiveCouponAffair(Long shopId, Long couponId,String endTime, Member m) throws RuntimeException{
+    public boolean receiveCouponAffair(Long shopId, Long couponId,String endTime, Member m) throws SQLException {
             Long receiveHistoryId = receiveCoupon(shopId, couponId, m);
             if (null != receiveHistoryId){
                 boolean b = setAutoInvalid(receiveHistoryId, endTime);
@@ -88,7 +88,7 @@ public class CouponService {
      * 优惠券使用事务
      **/
     @Transactional
-    public boolean useCouponAffair(Long couponHistoryId) throws RuntimeException{
+    public boolean useCouponAffair(Long couponHistoryId) throws SQLException{
         if (removeAutoInvalid(couponHistoryId)){
             int i = useConponByCouponHistoryId(couponHistoryId);
             if (i > 0){
