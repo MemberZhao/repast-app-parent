@@ -74,7 +74,7 @@ public class CouponService {
      * 优惠券领取事务
      * @return
      **/
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public boolean receiveCouponAffair(Long shopId, Long couponId,String endTime, Member m) throws SQLException {
             Long receiveHistoryId = receiveCoupon(shopId, couponId, m);
             if (null != receiveHistoryId){
@@ -87,7 +87,7 @@ public class CouponService {
     /**
      * 优惠券使用事务
      **/
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public boolean useCouponAffair(Long couponHistoryId) throws SQLException{
         if (removeAutoInvalid(couponHistoryId)){
             int i = useConponByCouponHistoryId(couponHistoryId);
