@@ -50,10 +50,35 @@ public interface IRepastService {
      * @param []
      * @date 2019/11/21
      * @return java.util.List<com.aaa.lee.app.domain.MemberReceiveAddress>
-     * @throws 
-    **/
-    @GetMapping("/receive")
-    List<MemberReceiveAddress> getMemberReceiveAddress();
+     * @throws
+     **/
+    @PostMapping("/receive")
+    List<MemberReceiveAddress> getMemberReceiveAddress(@RequestParam("token") String token);
+
+    /**
+     * 根据id删除用户的收货地址
+     * @param id
+     * @return
+     */
+    @PostMapping("/delSite")
+    boolean delSite(@RequestParam("id") Long id,@RequestParam("token") String token);
+
+    /**
+     * 修改会员表的收货地址
+     * @param memberReceiveAddress
+     * @return
+     */
+    @PostMapping("/updateSite")
+    boolean updateSite(@RequestBody MemberReceiveAddress memberReceiveAddress,@RequestParam("token") String token);
+
+    /**
+     * 添加收货地址
+     * @param memberReceiveAddress
+     * @return
+     */
+    @PostMapping("/insertSite")
+    boolean insertSite(@RequestBody MemberReceiveAddress memberReceiveAddress,@RequestParam("token") String token);
+
 
     /**
      * @author Seven Lee

@@ -8,6 +8,7 @@ import com.aaa.lee.app.vo.ShopInfoVo;
 import com.aaa.lee.app.vo.UsableCouponVO;
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -36,9 +37,27 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
             }
 
             @Override
-            public List<MemberReceiveAddress> getMemberReceiveAddress() {
-                System.out.println("测试收获地址列表熔断数据");
+            public List<MemberReceiveAddress> getMemberReceiveAddress(String token) {
+                System.out.println("测试查询收获地址列表熔断数据");
                 return null;
+            }
+
+            @Override
+            public boolean delSite(@RequestParam("id")Long id, @RequestParam("token") String token) {
+                System.out.println("测试删除收货地址熔断数据");
+                return false;
+            }
+
+            @Override
+            public boolean updateSite(MemberReceiveAddress memberReceiveAddress,String token) {
+                System.out.println("测试修改收货地址熔断数据");
+                return false;
+            }
+
+            @Override
+            public boolean insertSite(MemberReceiveAddress memberReceiveAddress,String token) {
+                System.out.println("测试增加收货地址熔断数据");
+                return false;
             }
 
             @Override

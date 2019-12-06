@@ -3,6 +3,7 @@ package com.aaa.lee.app.service;
 import com.aaa.lee.app.base.BaseService;
 import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.domain.MemberReceiveAddress;
+import com.aaa.lee.app.mapper.MemberMapper;
 import com.aaa.lee.app.mapper.MemberReceiveAddressMapper;
 import com.aaa.lee.app.utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class MemberReceiveAddressService extends BaseService<MemberReceiveAddres
     @Autowired
     private MemberReceiveAddressMapper memberReceiveAddressMapper;
 
+    @Autowired
+    private MemberMapper memberMapper;
+
     @Override
     public Mapper<MemberReceiveAddress> getMapper() {
         return memberReceiveAddressMapper;
@@ -34,16 +38,75 @@ public class MemberReceiveAddressService extends BaseService<MemberReceiveAddres
      * @author Seven Lee
      * @description
      *      通用会员id查询会员的收获地址列表
-     * @param [redisService]
+     * @param
      * @date 2019/11/21
      * @return java.util.List<com.aaa.lee.app.domain.MemberReceiveAddress>
-     * @throws 
-    **/
-    public List<MemberReceiveAddress> getMemberReceiveAddress(RedisService redisService) {
-        // 1.从redis中获取用户信息(redis就相当于session)
-        String mrbString = redisService.get(REDIS_KEY);
-        Member member = JSONUtil.toObject(mrbString, Member.class);
-        return memberReceiveAddressMapper.selectMemberReceiveAddrrss(member.getId());
+     * @throws
+     **/
+    public List<MemberReceiveAddress> getMemberReceiveAddress(String token) {
+        Member member =new Member();
+        member.setToken(token);
+        Member m = memberMapper.selectOne(member);
+        if (null!=m){
+            return memberReceiveAddressMapper.selectMemberReceiveAddrrss(m.getId());
+        }else{
+            return null;
+        }
     }
 
+    /**
+     * 根据id删除收货地址
+     * @param id
+     * @return
+     */
+    public boolean delSite(Long id ,String token){
+        Member member = memberMapper.selectByPrimaryKey(token);
+        if (null != member){
+            Integer i = memberReceiveAddressMapper.delSite(id);
+            if (i>0){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * 修改会员表的收货地址
+     * @param memberReceiveAddress
+     * @return
+     */
+    public boolean upSite(MemberReceiveAddress memberReceiveAddress,String token){
+        Member member = memberMapper.selectByPrimaryKey(token);
+        if (null != member) {
+            int i = memberReceiveAddressMapper.updateByPrimaryKey(memberReceiveAddress);
+            if (i > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+    /**
+     * 添加收货地址
+     * @param memberReceiveAddress
+     * @return
+     */
+    public boolean insertSite(MemberReceiveAddress memberReceiveAddress, String token) {
+        Member member = memberMapper.selectByPrimaryKey(token);
+        if (null != member) {
+            int i = memberReceiveAddressMapper.insert(memberReceiveAddress);
+            if (i > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
 }
