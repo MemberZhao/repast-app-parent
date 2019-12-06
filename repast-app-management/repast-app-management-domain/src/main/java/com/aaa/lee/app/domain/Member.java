@@ -19,10 +19,8 @@ public class Member implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "shop_id")
     private Long shopId;
 
-    @Column(name = "member_level_id")
     private Long memberLevelId;
 
     /**
@@ -84,13 +82,11 @@ public class Member implements Serializable {
     /**
      * 个性签名
      */
-    @Column(name = "personalized_signature")
     private String personalizedSignature;
 
     /**
      * 用户来源
      */
-    @Column(name = "source_type")
     private Integer sourceType;
 
     /**
@@ -106,39 +102,30 @@ public class Member implements Serializable {
     /**
      * 剩余抽奖次数
      */
-    @Column(name = "luckey_count")
+
     private Integer luckeyCount;
 
     /**
      * 历史积分数量
      */
-    @Column(name = "history_integration")
+
     private Integer historyIntegration;
 
-    @Column(name = "parent_id")
     private Long parentId;
 
     /**
      * 微信返回的open_id
      */
-    @Column(name = "open_id")
     private String openId;
 
     /**
      * 微信返回的session_key
      */
-    @Column(name = "session_key")
     private String sessionKey;
 
     /**
      * 登录验证token
      */
     private String token;
-
-    /**
-     * 会员余额
-     */
-    @Column(name = "member_balance")
-    private Double memberBalance;
 
 }

@@ -29,7 +29,6 @@
     <result column="open_id" property="openId" jdbcType="VARCHAR" />
     <result column="session_key" property="sessionKey" jdbcType="VARCHAR" />
     <result column="token" property="token" jdbcType="VARCHAR" />
-    <result column="member_balance" property="memberBalance" jdbcType="DOUBLE" />
   </resultMap>
   <update id="updateMemberInfoMemberId" parameterType="com.aaa.lee.app.domain.Member" >
     update ums_member set nickname=#{nickname},password=#{password},birthday=#{birthday},city=#{city},job=#{job} where id =#{id}
@@ -38,6 +37,34 @@
     select nickname from ums_member where id =#{id}
   </select>
   <select id="getMemberInforToken" resultType="com.aaa.lee.app.domain.Member">
-    select * from ums_member where token =#{token}
+    SELECT
+        id,
+        shop_id shopId,
+        member_level_id memberLevelId,
+        username,
+        password,
+        nickname,
+        phone,
+        status,
+        create_time createTime,
+        icon,
+        gender,
+        birthday,
+        city,
+        job,
+        personalized_signature personalizedSignature,
+        source_type sourceType,
+        integration,
+        growth,
+        luckey_count luckeyCount,
+        history_integration historyIntegration,
+        parent_id parentId,
+        open_id openId,
+        session_key sessionKey,
+        token
+    FROM
+        ums_member
+    WHERE
+        token = #{token}
   </select>
 </mapper>
