@@ -42,8 +42,8 @@ CollectService extends BaseService<Collect> {
         //判断商品当前状态  i=1 上架
         int i = collectMapper.selectProductStatusById(productId);
         if (i == 1){
-            if (null !=token ||!"".equals(token) ){
-                Member member = collectMapper.selectMemberByToken(token);
+            Member member = collectMapper.selectMemberByToken(token);
+            if (null !=member ){
                 collect.setMemberId(member.getId());
                 collect.setProductId(productId);
                 //查询是否已经收藏该商品
@@ -82,10 +82,8 @@ CollectService extends BaseService<Collect> {
      * @return
      */
     public ResultData toCollectOrder(Long orderId, String token){
-
-        if (null !=token ||!"".equals(token) ){
-
-            Member member = collectMapper.selectMemberByToken(token);
+        Member member = collectMapper.selectMemberByToken(token);
+        if (null !=member ){
             collect.setMemberId(member.getId());
             collect.setOrderId(orderId);
             //去数据库中查询该用户是否收藏该订单
@@ -114,9 +112,8 @@ CollectService extends BaseService<Collect> {
      * @return
      */
     public ResultData selectAllCollectProduct(String token){
-
-        if (null !=token ||!"".equals(token)){
-            Member member = collectMapper.selectMemberByToken(token);
+        Member member = collectMapper.selectMemberByToken(token);
+        if (null !=member){
             List<PmsProduct> pmsProductList = collectMapper.selectAllCollectProductByMemberId(member.getId());
             resultData.setCode(WIN);
             resultData.setData(pmsProductList);
@@ -133,9 +130,8 @@ CollectService extends BaseService<Collect> {
      * @return
      */
     public ResultData selectAllCollectOrder(String token){
-
-        if (null !=token ||!"".equals(token)){
-            Member member = collectMapper.selectMemberByToken(token);
+        Member member = collectMapper.selectMemberByToken(token);
+        if (null !=member){
             List<OmsOrder> omsOrderList = collectMapper.selectAllCollectOrderByMemberId(member.getId());
             resultData.setCode(WIN);
             resultData.setData(omsOrderList);
@@ -152,9 +148,8 @@ CollectService extends BaseService<Collect> {
      */
 
     public ResultData selectAllCollect(String token){
-
-        if (null !=token ||!"".equals(token)){
-            Member member = collectMapper.selectMemberByToken(token);
+        Member member = collectMapper.selectMemberByToken(token);
+        if (null !=member){
             Map<String, Object> collectCount = collectMapper.selectAllCollectCountByMember(member.getId());
             resultData.setCode(WIN);
             resultData.setData(collectCount);

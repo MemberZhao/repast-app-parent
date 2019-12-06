@@ -70,4 +70,6 @@ public class CollectController extends BaseController {
     public ResultData selectAllCollect(String token) {
        return repastService.selectAllCollect(token);
   }
+
+
 }
