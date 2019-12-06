@@ -43,7 +43,7 @@
             LEFT JOIN sms_coupon_product_relation cr ON cr.coupon_id = c.id
             LEFT JOIN ums_shop_information s ON s.id = c.shop_id
         WHERE
-          c.member_level <![CDATA[<=]]> #{memberLevel}
+          c.member_level <![CDATA[<=]]> #{memberLevel} and c.publish_count = 1
     </select>
     <select id="getAllCouponsByMemberId" parameterType="long" resultType="com.aaa.lee.app.vo.MemberAllCouponVO">
         SELECT
