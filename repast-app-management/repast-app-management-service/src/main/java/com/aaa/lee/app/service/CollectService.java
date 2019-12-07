@@ -57,7 +57,6 @@ CollectService extends BaseService<Collect> {
                     return resultData;
                 }else {
                     int aaa = collectMapper.insertCollectProductByMemberId(this.collect);
-                    System.out.println(aaa);
                     resultData.setCode(SUCCESS);
                     resultData.setMsg("商品添加收藏成功");
                     return resultData;
@@ -116,6 +115,7 @@ CollectService extends BaseService<Collect> {
         if (null !=member){
             List<PmsProduct> pmsProductList = collectMapper.selectAllCollectProductByMemberId(member.getId());
             resultData.setCode(WIN);
+            resultData.setMsg(null);
             resultData.setData(pmsProductList);
             return resultData;
         }else {

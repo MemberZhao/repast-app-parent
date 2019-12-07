@@ -17,6 +17,9 @@
     <result column="detail_address" property="detailAddress" jdbcType="VARCHAR" />
   </resultMap>
 
+  <delete id="delSite" parameterType="long">
+    delete from ums_member_receive_address where id = #{id}
+  </delete>
   <select id="selectMemberReceiveAddrrss" parameterType="long" resultMap="BaseResultMap">
     select * from ums_member_receive_address where member_id = #{memberId}
   </select>

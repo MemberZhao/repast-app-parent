@@ -18,4 +18,5 @@ public interface MemberReceiveAddressMapper extends Mapper<MemberReceiveAddress>
     **/
     List<MemberReceiveAddress> selectMemberReceiveAddrrss(Long memberId);
 
+    Integer delSite(Long id );
 }
