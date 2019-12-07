@@ -1,6 +1,7 @@
 package com.aaa.lee.app.controller;
 
 import com.aaa.lee.app.domain.MemberComplain;
+import com.aaa.lee.app.service.MemberCommentService;
 import com.aaa.lee.app.service.MemberComplainService;
 import com.aaa.lee.app.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class MemberComplainController {
     private MemberComplainService memberComplainService;
 
     @Autowired
-    private RedisService redisService;
+    private MemberCommentService memberCommentService;
 
     /**
      * 添加用户意见信息
@@ -32,7 +33,7 @@ public class MemberComplainController {
     @PostMapping("/addComplain")
     public Boolean addComplain(@RequestBody MemberComplain complain, @RequestParam("token") String token){
 
-        if(memberComplainService.addComplain(complain,token)){
+        if(memberComplainService.addComplain(complain,token,memberCommentService)){
             return true;
         }else{
             return false;

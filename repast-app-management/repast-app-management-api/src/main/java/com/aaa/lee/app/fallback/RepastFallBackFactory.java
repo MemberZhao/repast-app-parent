@@ -159,12 +159,14 @@ public class RepastFallBackFactory implements FallbackFactory<IRepastService> {
             }
 
             @Override
-            public String uploadHead(MultipartFile file) {
+            public String uploadHead(MultipartFile file,String token) {
+
                 return null;
             }
 
             @Override
-            public String upload(MultipartFile[] file) {
+            public String upload(MultipartFile[] file,String token) {
+
                 return null;
             }
 

@@ -23,8 +23,7 @@ public class MemberCommentController {
     @Autowired
     private MemberCommentService memberCommentService;
 
-    @Autowired
-    private MemberService memberService;
+
 
 
     /**

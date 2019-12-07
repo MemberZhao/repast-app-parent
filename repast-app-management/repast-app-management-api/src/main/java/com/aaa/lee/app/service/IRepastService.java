@@ -246,7 +246,7 @@ public interface IRepastService {
      */
 
     @PostMapping(value = "/uploadHead",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    String uploadHead(@RequestPart MultipartFile file);
+    String uploadHead(@RequestPart MultipartFile file,@RequestParam("token") String token);
 
     /***
      * 多张图片上传
@@ -255,6 +255,6 @@ public interface IRepastService {
      */
 
     @PostMapping(value = "/upload",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    String upload(@RequestPart(value = "file") MultipartFile[]  file);
+    String upload(@RequestPart(value = "file") MultipartFile[]  file,@RequestParam("token") String token);
 
 }

@@ -1,6 +1,7 @@
 package com.aaa.lee.app.service;
 
 import com.aaa.lee.app.base.BaseService;
+import com.aaa.lee.app.base.ResultData;
 import com.aaa.lee.app.domain.Member;
 import com.aaa.lee.app.domain.MemberComment;
 import com.aaa.lee.app.domain.MemberCommentReplay;
@@ -47,12 +48,14 @@ public class MemberCommentService extends BaseService<MemberComment> {
      */
     public List<MemberCommentVo> getMemberComment(String token){
         if(null != token || !"".equals(token)){
-            Member memberByToken = memberCommentMapper.getMemberByToken(token);
-            System.out.println("commentservice进入了");
-            List<MemberCommentVo> memberCommentVos = memberCommentMapper.selectMemberComment(memberByToken.getId());
-            System.out.println("该用户的陪你国家为为"+memberCommentVos.toString());
+            // 通过当前类的方法查询用户信息
+            Member member = this.memberToken(token);
+            // 判断是否有用户信息
+            if(null == member){
+                return null;
+            }
+            List<MemberCommentVo> memberCommentVos = memberCommentMapper.selectMemberComment(member.getId());
             if(memberCommentVos.size() > 0){
-                System.out.println("查询shshshshshh");
                 for (MemberCommentVo mcm : memberCommentVos) {
                     Long orderId = mcm.getOrderId();
                     Long commentId = mcm.getId();
@@ -60,9 +63,7 @@ public class MemberCommentService extends BaseService<MemberComment> {
                     // 通过订单id查询该商品的所属的商品信息
                     List<CommentProVo> commentProVos = memberCommentMapper.selectProComment(orderId);
                     // 判断该评价信息中商品id是否为空
-                    System.out.println("商品id为"+productId);
                     if(null == productId){
-                        System.out.println("该订单为多个商品");
                         // 如果为空，则把商品信息存放到该订单所属的评价里
                         mcm.setMemberCommentVos(commentProVos);
                     }else{
@@ -71,14 +72,13 @@ public class MemberCommentService extends BaseService<MemberComment> {
                     }
                     // 通过评价id查询该评价的回复信息
                     List<MemberCommentReplay> memberCommentReplays = memberCommentReplayMapper.selectCommentReplay(commentId);
-
                     // 把回复信息存放到评价里
                     mcm.setCommentReplays(memberCommentReplays);
                 }
-                System.out.println("该订单的内容有"+memberCommentVos);
                 return memberCommentVos;
             }else{
                 return null;
+
             }
         }else{
             return null;
@@ -90,8 +90,12 @@ public class MemberCommentService extends BaseService<MemberComment> {
      * @param id
      * @return
      */
-    public Boolean deleteComment(Long id,String token){
+    public Boolean deleteComment(Long id, String token){
         if(null != token || !"".equals(token)){
+            Member member = this.memberToken(token);
+            if(null == member){
+                return false;
+            }
             int i = memberCommentMapper.updateCommentStatus(id);
             if(i > 0){
                 return true;
@@ -110,14 +114,17 @@ public class MemberCommentService extends BaseService<MemberComment> {
      */
     public Boolean addComment(MemberComment comment, String token) {
         if (null != token || !"".equals(token)) {
-            Member member = memberCommentMapper.getMemberByToken(token);
+            // 通过token查询所有用户信息
+            Member member = this.memberToken(token);
+            if(null == member){
+                return false;
+            }
+            // 把用户信息有关内容存放到评价列表里
             comment.setMemberNickName(member.getNickname());
             comment.setMemberIcon(member.getIcon());
             Long orderId = comment.getOrderId();
-            System.out.println("id为" + orderId);
             // 通过订单id查询该商品的所属的商品信息
             List<CommentProVo> commentProVos = memberCommentMapper.selectProComment(orderId);
-            System.out.println("订单查询" + commentProVos.toString());
             if (commentProVos.size() == 1) {
                 // 如果该订单中为单个商品,则添加到评价表中
                 for (CommentProVo commentProVo : commentProVos) {
@@ -130,7 +137,6 @@ public class MemberCommentService extends BaseService<MemberComment> {
                     comment.setProductName(productName);
                     comment.setProductAttribute(name);
                 }
-                System.out.println("添加的值为" + comment);
             }
             //获取当前时间
             Date date = new Date();
@@ -147,7 +153,10 @@ public class MemberCommentService extends BaseService<MemberComment> {
             }
             // 把当前时间添加到数据库
             comment.setCreateTime(strD);
+            // 设置默认状态码为0
             comment.setShowStatus(0);
+            // 设置评论回复数为0
+            comment.setReplayCount(0);
             int insert = memberCommentMapper.insert(comment);
             if (insert > 0) {
                 return true;
@@ -158,4 +167,19 @@ public class MemberCommentService extends BaseService<MemberComment> {
             return false;
         }
     }
+
+    /**
+     * 通过token查询所有信息
+     * @return
+     */
+    public Member memberToken(String token){
+        Member memberByToken = memberCommentMapper.getMemberByToken(token);
+        if(null == memberByToken){
+            System.out.println("为空");
+            return  null;
+        }else{
+            return  memberByToken;
+        }
+    }
+
 }

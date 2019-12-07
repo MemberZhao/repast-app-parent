@@ -25,6 +25,9 @@ public class MemberComplainService extends BaseService<MemberComplain> {
     @Autowired
     private MemberComplainMapper memberComplainMapper;
 
+    @Autowired
+    private MemberCommentService memberCommentService;
+
     @Override
     public Mapper<MemberComplain> getMapper() {
 
@@ -36,11 +39,14 @@ public class MemberComplainService extends BaseService<MemberComplain> {
      * @param complain
      * @return
      */
-    public Boolean addComplain(MemberComplain complain, String token) {
+    public Boolean addComplain(MemberComplain complain, String token,MemberCommentService memberCommentService) {
         if(null != token || !"".equals(token)){
-            Member memberByToken = memberComplainMapper.getMemberByToken(token);
-            complain.setMemberId(memberByToken.getId());
-            complain.setMemberNickName(memberByToken.getNickname());
+            Member member = memberCommentService.memberToken(token);
+            if(null == member){
+                return false;
+            }
+            complain.setMemberId(member.getId());
+            complain.setMemberNickName(member.getNickname());
             //********
             //获取当前时间
             Date date = new Date();
@@ -61,12 +67,10 @@ public class MemberComplainService extends BaseService<MemberComplain> {
             if (insert > 0) {
                 return true;
             }else{
-                return null;
+                return false;
             }
         }else{
-            return null;
+            return false;
         }
-
-
     }
 }

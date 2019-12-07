@@ -13,7 +13,4 @@
     <result column="tel" property="tel" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
-  <select id="getMemberByToken" parameterType="String" resultType="com.aaa.lee.app.domain.Member">
-        select * from ums_member where token=#{token}
-    </select>
 </mapper>
