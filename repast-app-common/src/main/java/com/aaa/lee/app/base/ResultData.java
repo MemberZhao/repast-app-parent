@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 
 /**
- * @Company AAA软件教育
+ * @Company 
  * @Author Seven Lee
  * @Date Create in 2019/11/20 11:08
  * @Description
- *      在真实的项目开发环境中，除非跳转页面(跳转也是ajax控制)，所有的请求全部都是ajax
+ *      
  *      定义统一的返回值类型
  *      code:返回状态码
  *      msg:返回消息("保存错误")
