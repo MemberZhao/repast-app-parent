@@ -1,7 +1,7 @@
 package com.aaa.lee.app.staticstatus;
 
 /**
- * @Company AAA软件教育
+ * @Company 
  * @Author Seven Lee
  * @Date Create in 2019/11/21 9:58
  * @Description
